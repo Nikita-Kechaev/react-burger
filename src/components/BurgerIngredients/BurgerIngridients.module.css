@@ -1,0 +1,53 @@
+.column {
+    display: flex;
+    width: 600px;
+    flex-direction: column;
+    float: left;
+    height: 90vh;
+}
+
+.tab {
+    display: flex;
+}
+
+.ingridientsContainer {
+    height: 60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.cardsContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 24px;
+    grid-row-gap: 32px;
+}
+
+.card {
+    width: 276px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 4px
+}
+
+.scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
