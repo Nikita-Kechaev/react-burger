@@ -1,0 +1,22 @@
+.modalContainer {
+    width: 600px;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.orderClose {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 60px;
+    margin-right: 40px;
+    margin-left: 40px;
+}
