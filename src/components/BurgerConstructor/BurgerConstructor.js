@@ -3,6 +3,9 @@ import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
+import Modal from '../Modal/Modal';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import { ingredientPropTypes } from '../../utils/types'
 
 
 export default function BurgerConstructor ({ ingridients }) {
@@ -68,26 +71,16 @@ export default function BurgerConstructor ({ ingridients }) {
                     Оформить заказ
                 </Button>
             </div>
-            {modal.isVisible && <ModalOverlay  close={closeModal}/>}
+            {modal.isVisible && 
+                <ModalOverlay close={closeModal}>
+                    <Modal close={closeModal}>
+                        <OrderDetails close={closeModal}/>
+                    </Modal>
+                </ModalOverlay>
+            }
         </div>
     )
 }
-
-const ingredientPropTypes = PropTypes.shape({
-    id: PropTypes.any,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.any.isRequired,
-    image_mobile:PropTypes.any.isRequired,
-    image_large:PropTypes.any.isRequired,
-    __v: PropTypes.any.isRequired,
-});
-
 
 BurgerConstructor.propTypes = {
     ingridients: PropTypes.arrayOf(ingredientPropTypes).isRequired

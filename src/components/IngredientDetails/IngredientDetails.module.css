@@ -1,3 +1,13 @@
+.modalContainer {
+    width: 600px;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .ingredientContainer {
     display: flex;
     justify-content: center;
