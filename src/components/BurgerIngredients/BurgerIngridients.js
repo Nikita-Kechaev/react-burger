@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './BurgerIngridients.module.css';
 import PropTypes from 'prop-types';
 import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ingredientPropTypes } from '../../utils/types'
@@ -74,11 +73,9 @@ export default function BurgerIngridients ({ ingridients }) {
                 ))}
             </div>
             {modal.isVisible && 
-                <ModalOverlay ingridient={modal.ingridient} close={closeModal}>
-                    <Modal ingridient={modal.ingridient} close={closeModal}>
-                        <IngredientDetails ingridient={modal.ingridient} close={closeModal} />
-                    </Modal>
-                </ModalOverlay>
+                <Modal ingridient={modal.ingridient} close={closeModal}>
+                    <IngredientDetails ingridient={modal.ingridient} close={closeModal} />
+                </Modal>
             }
         </div>
     )

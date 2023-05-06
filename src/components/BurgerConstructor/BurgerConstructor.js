@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { ingredientPropTypes } from '../../utils/types'
@@ -72,16 +71,14 @@ export default function BurgerConstructor ({ ingridients }) {
                 </Button>
             </div>
             {modal.isVisible && 
-                <ModalOverlay close={closeModal}>
-                    <Modal close={closeModal}>
-                        <OrderDetails close={closeModal}/>
-                    </Modal>
-                </ModalOverlay>
+                <Modal close={closeModal}>
+                    <OrderDetails close={closeModal}/>
+                </Modal>
             }
         </div>
     )
 }
 
 BurgerConstructor.propTypes = {
-    ingridients: PropTypes.arrayOf(ingredientPropTypes).isRequired
+    ingridients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
 };
