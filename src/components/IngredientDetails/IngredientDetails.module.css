@@ -1,0 +1,25 @@
+.modalContainer {
+    width: 600px;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredientContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.charContainer {
+    display: flex;
+    gap: 20px;
+}
+
+.char {
+    text-align: center;
+}

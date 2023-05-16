@@ -1,31 +1,47 @@
 import React from 'react';
 import styles from './BurgerConstructor.module.css';
-import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import ingridients  from '../../utils/data'
+import PropTypes from 'prop-types';
+import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import Modal from '../Modal/Modal';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import { ingredientPropTypes } from '../../utils/types'
 
 
-export default function BurgerConstructor () {
-    const [state, setState] = React.useState({
-        data: ingridients,
+export default function BurgerConstructor ({ ingridients }) {
+    const [modal, setModal] = React.useState({
+        isVisible: false,
     })
 
-    const total = state.data.reduce((acc, p) => acc + p.price, 0);
+    const openModal = () => {
+        setModal({
+            isVisible: true,
+        });    
+    }
+    
+    const closeModal = () => {
+        setModal({
+            isVisible: false,
+        });
+    }
+
+    const total = ingridients.reduce((acc, p) => acc + p.price, 0);
 
     return (
         <div className={`${styles.column} mt-25`}>
-            <div className='pt-4 pb-4 pr-8 pl-8'>
+            <div className={`${styles.topBotIngridients} pt-4 pb-4 pr-8 pl-8`}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${state.data[0].name} (верх)`}
-                    price={`${state.data[0].price}`}
-                    thumbnail={`${state.data[0].image_mobile}`}
+                    text={`${ingridients[0].name} (верх)`}
+                    price={`${ingridients[0].price}`}
+                    thumbnail={`${ingridients[0].image_mobile}`}
                 />
             </div>
             <div className={`${styles.ingridients} ${styles.scroll}`}>
-                {state.data.map((ingridient, index) => (
+                {ingridients.map((ingridient, index) => (
                     (ingridient.type != "bun" &&
-                        <div className='pt-4 pb-4 pr-8 pl-8' key={index}>
+                        <div className={`${styles.middleIngridients} pt-4 pb-4 pr-8 pl-8`} key={index}>
+                            <DragIcon type="primary" />
                             <ConstructorElement
                                 isLocked={false}
                                 text={ingridient.name}
@@ -36,13 +52,13 @@ export default function BurgerConstructor () {
                     )
                 ))}
             </div>
-            <div className='pt-4 pb-4 pr-8 pl-8'>
+            <div className={`${styles.topBotIngridients} pt-4 pb-4 pr-8 pl-8`}>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${state.data[0].name} (низ)`}
-                    price={`${state.data[0].price}`}
-                    thumbnail={`${state.data[0].image_mobile}`}
+                    text={`${ingridients[0].name} (низ)`}
+                    price={`${ingridients[0].price}`}
+                    thumbnail={`${ingridients[0].image_mobile}`}
                 />
             </div>
             <div className={`${styles.finalCost} pr-4 pt-10 pb-10`}>
@@ -50,10 +66,19 @@ export default function BurgerConstructor () {
                     {total}
                 </p>
                 <CurrencyIcon type="primary"/>
-                <Button htmlType="button" type="primary" size="large" extraClass="ml-10">
+                <Button htmlType="button" type="primary" size="large" extraClass="ml-10" onClick={openModal}>
                     Оформить заказ
                 </Button>
             </div>
+            {modal.isVisible && 
+                <Modal close={closeModal}>
+                    <OrderDetails close={closeModal}/>
+                </Modal>
+            }
         </div>
     )
 }
+
+BurgerConstructor.propTypes = {
+    ingridients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
+};

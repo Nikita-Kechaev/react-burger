@@ -11,6 +11,17 @@
     overflow-y: scroll;
 }
 
+.topBotIngridients {
+    margin-left: 22px;
+}
+
+.middleIngridients {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
 .finalCost {
     width: 100%;
     display: flex;

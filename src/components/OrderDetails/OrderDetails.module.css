@@ -1,0 +1,19 @@
+.orederContainer {
+    margin-top: 120px;
+    text-align: center;
+    margin-bottom: 120px;
+    margin-left: 120px;
+}
+
+.orderMainContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.orderClose {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 60px;
+    margin-right: 40px;
+    margin-left: 40px;
+}
