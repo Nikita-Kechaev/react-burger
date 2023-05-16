@@ -2,13 +2,18 @@ import React from 'react';
 import styles from './OrderDetails.module.css';
 import { CheckMarkIcon, CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { OrderContext } from '../../utils/orderContext';
 
 
 export default function OrderDetails (props) {
+
+    const order = useContext(OrderContext);
+
     return (
         <div className={styles.orderMainContainer}>
             <div className={styles.orederContainer}>
-                <p className="text text_type_digits-large mb-8">034536</p>
+                <p className="text text_type_digits-large mb-8">{order.orderNumber.order.number}</p>
                 <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
                 <CheckMarkIcon type="primary" />
                 <p className="text text_type_main-small mt-15 mb-2">Ваш заказ начали готовить</p>

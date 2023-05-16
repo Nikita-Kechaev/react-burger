@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './BurgerIngridients.module.css';
-import PropTypes from 'prop-types';
 import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { ingredientPropTypes } from '../../utils/types'
+import { IngredientContext } from '../../utils/ingredientsContext';
+import { useContext } from 'react';
 
 
-export default function BurgerIngridients ({ ingridients }) {
+export default function BurgerIngridients () {
+
+    const ingridients = useContext(IngredientContext);
     const [current, setCurrent] = React.useState('bun')
     const [modal, setModal] = React.useState({
         isVisible: false,
@@ -80,7 +82,3 @@ export default function BurgerIngridients ({ ingridients }) {
         </div>
     )
 }
-
-BurgerIngridients.propTypes = {
-    ingridients: PropTypes.arrayOf(ingredientPropTypes).isRequired
-};
