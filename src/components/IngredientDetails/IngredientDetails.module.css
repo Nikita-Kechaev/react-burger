@@ -1,14 +1,13 @@
-.modalContainer {
-    width: 600px;
+.mainIingredientContainer {
+    position: absolute;
 }
 
-.titleContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.maintContainer {
+    height: 539px;
 }
 
 .ingredientContainer {
+    padding-left: 100px;
     display: flex;
     justify-content: center;
     align-items: center;

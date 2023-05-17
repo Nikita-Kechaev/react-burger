@@ -6,7 +6,6 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import { IngredientContext } from '../../utils/ingredientsContext';
 import { useContext } from 'react';
 import { useGetOrder } from '../../utils/burger-api'
-import { OrderContext } from '../../utils/orderContext';
 
 
 export default function BurgerConstructor () {
@@ -75,11 +74,9 @@ export default function BurgerConstructor () {
                 </Button>
             </div>
             {modal.isVisible &&
-                <OrderContext.Provider value={order}>
-                    <Modal close={closeModal}>
-                        <OrderDetails close={closeModal}/>
-                    </Modal>
-                </OrderContext.Provider>
+                <Modal close={closeModal}>
+                    <OrderDetails order={order} close={closeModal}/>
+                </Modal>
             }
         </div>
     )
