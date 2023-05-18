@@ -14,3 +14,16 @@
     background-color: black;
     border-radius: 10%;
 }
+
+.closeButton {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+}
