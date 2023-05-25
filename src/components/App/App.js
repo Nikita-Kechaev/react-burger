@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader'
+import { useDispatch, useSelector } from 'react-redux';
 import BurgerIngridients from '../BurgerIngredients/BurgerIngridients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import useGetIngridients  from '../../utils/burger-api'
-import { IngredientContext } from '../../utils/ingredientsContext';
+import { getIngridients } from '../../services/actions/ingredients';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 
 
 export default function App () {
 
-  const state = useGetIngridients()
+  const dispatch = useDispatch();
+  const { isLoading, hasError } = useSelector(store => store.ingredients)
+
+  useEffect(
+    () => {
+      dispatch(getIngridients());
+    },
+    []
+  );
 
   return (
     <>
       <AppHeader />
-      {state.isloading && !state.hasError ? (
+      { !isLoading && !hasError? (
       <main className={styles.main}>
-        <IngredientContext.Provider value={state.ingridients}>
-          <BurgerIngridients />
-          <BurgerConstructor />
-        </IngredientContext.Provider>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngridients />
+            <BurgerConstructor />
+          </DndProvider>
       </main>
       ):(
       <main className={styles.main}>
