@@ -1,4 +1,5 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
 import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
 import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
@@ -20,6 +21,9 @@ export default function Modal (props) {
         dispatch({
             type: CLOSE_ORDER_MODAL
         });
+        dispatch({
+            type: CLEAR_CONSTRUCTOR
+        })
     }
 
     return ReactDOM.createPortal(

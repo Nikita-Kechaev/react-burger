@@ -48,3 +48,7 @@
 .scroll::-webkit-scrollbar-track {
     background: #2F2F37;
 }
+
+.warning {
+   margin-left: 80px;
+}

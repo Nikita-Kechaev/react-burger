@@ -9,9 +9,8 @@ import { MainElement } from "./MainElement"
 import { BunElement } from "./BunElement"
 import Modal from '../Modal/Modal';
 
-import { ADD_ITEMS_TO_CONSTRUCTOR, MOVE_CARD } from '../../services/actions/constructor'
+import { createUuidToItem, MOVE_CARD } from '../../services/actions/constructor'
 import { getOrder } from '../../services/actions/order';
-
 import styles from './BurgerConstructor.module.css';
 
 
@@ -31,14 +30,12 @@ export default function BurgerConstructor () {
     const [, dropTarget] = useDrop({
         accept: "ingridients",
         drop(item) {
-            dispatch({
-                type: ADD_ITEMS_TO_CONSTRUCTOR,
-                item: item
-            });
+            dispatch(createUuidToItem(item))
         },
     });
-    const getOrdeNumber = (ing) => {
-        const ids = ing.map(item => item._id)
+    const getOrdeNumber = (ing, bun) => {
+        const ingBun = ing.concat(bun)
+        const ids = ingBun.map(item => item._id)
         dispatch(getOrder(ids))
     }
 
@@ -64,12 +61,16 @@ export default function BurgerConstructor () {
     }, [])
 
     return (
-
         <div className={`${styles.column} mt-25`}>
             <div ref={dropTarget} className={styles.dropContainer}>
+
                 <div className={`${styles.topBotIngridients} pt-4  pr-8 pl-8`}>
-                    <BunElement type="top" text="верх" />
+                    { bun ?
+                    <BunElement type="top" text="верх" /> :
+                    <p className={`${styles.warning} text text_type_main-large`}>добавьте булку</p>
+                    }
                 </div>
+
                 <div className={`${styles.ingridients} ${styles.scroll}`}>
                     {ingridients && ingridients.map((card, i) => renderCard(card, i))}
                 </div>
@@ -82,9 +83,11 @@ export default function BurgerConstructor () {
                     {total + bunPrice}
                 </p>
                 <CurrencyIcon type="primary"/>
-                <Button htmlType="button" type="primary" size="large" extraClass="ml-10" onClick={() => getOrdeNumber(ingridients)}>
+                { bun &&
+                <Button htmlType="button" type="primary" size="large" extraClass="ml-10" onClick={() => getOrdeNumber(ingridients, bun)}>
                     Оформить заказ
                 </Button>
+                }
             </div>
             {modalIsVisible && <Modal><OrderDetails /></Modal>}
         </div>

@@ -1,9 +1,9 @@
 import {
     MOVE_CARD,
     ADD_ITEMS_TO_CONSTRUCTOR,
-    DELTE_ITEMS_FROM_CONSTRUCTOR
+    DELTE_ITEM_FROM_CONSTRUCTOR,
+    CLEAR_CONSTRUCTOR
 } from '../actions/constructor';
-import uuid from 'react-uuid';
 import update from 'immutability-helper'
 
 
@@ -35,10 +35,6 @@ export const constructorReducer = (state = initialState, action) => {
             }
         }
         case ADD_ITEMS_TO_CONSTRUCTOR : {
-            const newItem = {
-                ...action.item,
-                uuid: uuid()
-            }
             if (action.item.type === 'bun') {
                 return {
                     ...state,
@@ -47,14 +43,21 @@ export const constructorReducer = (state = initialState, action) => {
             } else {
                 return {
                     ...state,
-                    constructorItems: [newItem, ...state.constructorItems]
+                    constructorItems: [action.item, ...state.constructorItems]
                 }
             }
         }
-        case DELTE_ITEMS_FROM_CONSTRUCTOR : {
+        case DELTE_ITEM_FROM_CONSTRUCTOR : {
             return {
                 ...state,
                 constructorItems: [...state.constructorItems].filter(item => item.uuid !== action.item.uuid)
+            }
+        }
+        case CLEAR_CONSTRUCTOR : {
+            return {
+                ...state,
+                bun: '',
+                constructorItems: [], 
             }
         }
         default : {

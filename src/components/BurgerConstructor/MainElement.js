@@ -1,5 +1,5 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { DELTE_ITEMS_FROM_CONSTRUCTOR } from '../../services/actions/constructor'
+import { DELTE_ITEM_FROM_CONSTRUCTOR } from '../../services/actions/constructor'
 import { ingredientPropTypes } from '../../utils/types'
 import styles from './BurgerConstructor.module.css';
 import { useDrag ,useDrop } from "react-dnd";
@@ -13,7 +13,7 @@ export const MainElement = ({ id, item, index, moveCard }) => {
     const dispatch = useDispatch();
     const onDelete = (item) => {
         dispatch({
-            type: DELTE_ITEMS_FROM_CONSTRUCTOR,
+            type: DELTE_ITEM_FROM_CONSTRUCTOR,
             item
         })
     }

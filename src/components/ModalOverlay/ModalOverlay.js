@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ModalOverlay.module.css';
+import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
 import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
 import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
 import { useDispatch } from 'react-redux';
@@ -20,6 +21,9 @@ export default function ModalOverlay () {
         });
         dispatch({
             type: CLOSE_ORDER_MODAL
+        });
+        dispatch({
+            type: CLEAR_CONSTRUCTOR
         });
     }
     
