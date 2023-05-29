@@ -1,9 +1,9 @@
 .column {
     display: flex;
     width: 600px;
+    height: 580px;
     flex-direction: column;
     float: left;
-    height: 90vh;
 }
 
 .tab {

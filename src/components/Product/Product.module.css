@@ -1,0 +1,35 @@
+.card {
+    width: 276px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.dragCard {
+    width: 276px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    background-color: violet;
+    position: relative;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 4px
+}
+
+.counter {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}

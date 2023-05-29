@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from './IngredientDetails.module.css';
-import { ingredientPropTypes } from '../../utils/types'
-import PropTypes from 'prop-types';
+import {  useSelector } from 'react-redux';
 
 
-export default function IngredientDetails (props) {
+export default function IngredientDetails () {
+
+    const currentItem = useSelector(store => store.ingredients.currentItem)
+
     return (
         <div className={styles.maintContainer }>
             <div className='pt-10 pl-10'>
@@ -12,24 +14,24 @@ export default function IngredientDetails (props) {
             </div>
             <div className={styles.mainIngredientContainer }>
                 <div className={styles.ingredientContainer}>
-                    <img src={props.ingridient.image_large} alt={props.ingridient.name} />
-                    <p className="text text_type_main-medium mt-4">{props.ingridient.name}</p>
+                    <img src={currentItem.image_large} alt={currentItem.name} />
+                    <p className="text text_type_main-medium mt-4">{currentItem.name}</p>
                     <div className={`${styles.charContainer} text text_type_main-default text_color_inactive mt-8`}>
                         <div className={styles.char}>
                             <p>Калории,ккал</p>
-                            <p>{props.ingridient.calories}</p>
+                            <p>{currentItem.calories}</p>
                         </div>
                         <div className={styles.char}>
                             <p>Белки, г</p>
-                            <p>{props.ingridient.proteins}</p>
+                            <p>{currentItem.proteins}</p>
                         </div>
                         <div className={styles.char}>
                             <p>Жиры, г</p>
-                            <p>{props.ingridient.fat}</p>
+                            <p>{currentItem.fat}</p>
                         </div>
                         <div className={styles.char}>
                             <p>Углеводы, г</p>
-                            <p>{props.ingridient.carbohydrates}</p>
+                            <p>{currentItem.carbohydrates}</p>
                         </div>
                     </div>
                 </div>
@@ -37,8 +39,3 @@ export default function IngredientDetails (props) {
         </div>
     )
 }
-
-IngredientDetails.propTypes = {
-    ingridient: ingredientPropTypes.isRequired,
-    close: PropTypes.func.isRequired,
-};

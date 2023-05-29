@@ -1,24 +1,39 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
+import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
+import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
-import {  CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import ReactDOM from 'react-dom';
+import { useDispatch } from 'react-redux';
 import styles from './Modal.module.css'
+import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 
 export default function Modal (props) {
-    const handleClose = (e) => {
-        e.stopPropagation();
+
+    const dispatch = useDispatch()
+
+    const onClose = () => {
+        dispatch({
+            type: CLOSE_CURRENT_ITEM
+        });
+        dispatch({
+            type: CLOSE_ORDER_MODAL
+        });
+        dispatch({
+            type: CLEAR_CONSTRUCTOR
+        })
     }
 
     return ReactDOM.createPortal(
-        <div className={styles.modalContainer} onClick={props.close}>
-            <ModalOverlay {...props}/>
-            <div className={styles.modalWindow} onClick={handleClose}>
+        <div className={styles.modalContainer}>
+            <ModalOverlay />
+            <div className={styles.modalWindow}>
                 <div className={styles.mainContainer}>
                     {props.children}
-                    <div className={`${styles.closeButton}`}>
-                        <CloseIcon onClick={props.close} type="primary" />
+                    <div className={`${styles.closeButton}`} onClick={() => onClose()}>
+                        <CloseIcon type="primary" />
                     </div>
                 </div>
             </div>
@@ -27,5 +42,5 @@ export default function Modal (props) {
 }
 
 Modal.propTypes = {
-    close: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired
 }
