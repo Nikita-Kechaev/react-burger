@@ -12,15 +12,18 @@ import Modal from '../Modal/Modal';
 import { createUuidToItem, MOVE_CARD } from '../../services/actions/constructor'
 import { getOrder } from '../../services/actions/order';
 import styles from './BurgerConstructor.module.css';
+import { useNavigate } from 'react-router-dom';
+import { GET_ORDER_REQUEST } from '../../services/actions/order'
 
 
 
 export default function BurgerConstructor () {
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
 
     const ingridients = useSelector(store => store.constructorArr.constructorItems)
-
+    const user = useSelector(store => store.user.user)
 
     const total = ingridients.reduce((acc, item) => acc + item.price, 0)
     const bun = useSelector(store => store.constructorArr.bun)
@@ -33,10 +36,14 @@ export default function BurgerConstructor () {
             dispatch(createUuidToItem(item))
         },
     });
+
     const getOrdeNumber = (ing, bun) => {
         const ingBun = ing.concat(bun)
         const ids = ingBun.map(item => item._id)
-        dispatch(getOrder(ids))
+        dispatch({
+            type: GET_ORDER_REQUEST
+        })
+        if (!user) {navigate('/login')} else { dispatch(getOrder(ids))}
     }
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {

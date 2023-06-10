@@ -1,15 +1,26 @@
-import React from 'react';
 import styles from './IngredientDetails.module.css';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
+export const IngredientDetails = () => {
+    const {ingredientId}  = useParams()
+    const location = useLocation()
+    let currentItem;
+    const itemModal = useSelector(store => store.ingredients.currentItem)
+    const items = useSelector(store => store.ingredients.items)
 
-export default function IngredientDetails () {
+    const itemURL = items ? items.filter(item => item._id === ingredientId)[0] : ''
 
-    const currentItem = useSelector(store => store.ingredients.currentItem)
+    if (ingredientId) {
+        currentItem = itemURL
+    } else {
+        currentItem = itemModal
+    }
 
     return (
         <div className={styles.maintContainer }>
-            <div className='pt-10 pl-10'>
+            <div className={`${styles.titleContainer} pt-10 pl-10`}>
                 <p className="text text_type_main-large">Детали ингредиента</p>
             </div>
             <div className={styles.mainIngredientContainer }>

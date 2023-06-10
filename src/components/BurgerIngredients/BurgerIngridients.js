@@ -2,7 +2,7 @@ import React, {  useEffect, useRef, useState } from 'react';
 import styles from './BurgerIngridients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 import { Product } from '../Product/Product'
 import { useSelector } from 'react-redux';
 

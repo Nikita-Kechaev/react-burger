@@ -1,0 +1,19 @@
+.mainContainer {
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkCont {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF
+}
