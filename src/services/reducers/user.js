@@ -12,7 +12,8 @@ import {
 const initialState = {
     user: '',
     errorMessage: '',
-    sendEmail: false
+    sendEmail: false,
+    email: ''
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -59,13 +60,15 @@ export const userReducer = (state = initialState, action) => {
         case SEND_FORGOT_PASS_MESS_SUCCES: {
             return{
                 ...state,
-                sendEmail: true
+                email: action.data.email,
+                sendEmail: action.data.email
             }
         }
         case SEND_FORGOT_PASS_MESS_FAILED: {
             return{
                 ...state,
-                sendEmail: false
+                sendEmail: false,
+                email: ''
             }
         }
         default: {

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css'
 import { useState, useCallback, useEffect } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
-import { signIn, getUser } from '../../services/actions/user'
+import { signIn, getUser } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie'
 
 
 export const LoginPage = () => {
@@ -27,7 +28,10 @@ export const LoginPage = () => {
     );
     
     const init = async () => {
-        await dispatch(getUser());
+        const isToken = getCookie('accessToken')
+        if (isToken) {
+            await dispatch(getUser());
+        }
     }
     
     useEffect(() => {
@@ -37,7 +41,7 @@ export const LoginPage = () => {
 
     if (user) {return <Navigate to = '/' replace={true} />} else {
     return (
-        <div className={styles.mainContainer}>
+        <form onSubmit={onClick} className={styles.mainContainer}>
             <p className="text text_type_main-medium">Вход</p>
             <EmailInput
                 placeholder={'E-mail'}
@@ -54,7 +58,7 @@ export const LoginPage = () => {
                 extraClass="mb-6"
                 name='password'
             />
-            <Button htmlType="button" extraClass="mb-20" onClick={onClick}>Войти</Button>
+            <Button htmlType="submit" extraClass="mb-20">Войти</Button>
             <div className={`${styles.linkCont} mb-4`}>
                 <p className="text text_type_main-default text_color_inactive">Вы - новый пользователь?</p>
                 <Link to='/register' className={`${styles.link} text text_type_main-default`}>Зарегестрироваться</Link>
@@ -63,6 +67,6 @@ export const LoginPage = () => {
                 <p className="text text_type_main-default text_color_inactive">Забыли пароль?</p>
                 <Link to="/forgot-password" className={`${styles.link} text text_type_main-default`}>Восстановить пароль</Link>
             </div>
-        </div>
+        </form>
     )
 }}

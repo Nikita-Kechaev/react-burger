@@ -170,7 +170,8 @@ export const resetPassword = async form => {
             BASE_URL + '/password-reset/reset', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(form)
             }

@@ -33,8 +33,8 @@ const useAuth = async (func, dispatch) => {
             accessToken = res.accessToken.split('Bearer ')[1]
             refreshToken = res.refreshToken
             if (accessToken && refreshToken) {
-                setCookie('accessToken', accessToken);
-                setCookie('refreshToken', refreshToken );
+                setCookie('accessToken', accessToken, { path: '/' });
+                setCookie('refreshToken', refreshToken, { path: '/'});
             }
             dispatch ({
                 type: GET_USER_LOGIN_SUCCESS,
@@ -66,7 +66,8 @@ export const forgPass = (email) => {
         forgotPassword(email).then((res) => {
             if (res.success) {
                 dispatch({
-                    type: SEND_FORGOT_PASS_MESS_SUCCES
+                    type: SEND_FORGOT_PASS_MESS_SUCCES,
+                    data: email
                 })
             } else {
                 dispatch({

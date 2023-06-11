@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../services/actions/user'
 import { useEffect, useState } from 'react';
+import { getCookie } from '../../utils/cookie'
 
 
 export const ProtectedRouteElement = ({ element }) => {
@@ -11,7 +12,10 @@ export const ProtectedRouteElement = ({ element }) => {
 
 
     const init = async () => {
-       await dispatch(getUser());
+      const isToken = getCookie('accessToken')
+      if (isToken) {
+        await dispatch(getUser());
+      }
       setUserLoaded(true);
     }
 

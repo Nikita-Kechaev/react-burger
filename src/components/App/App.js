@@ -17,17 +17,18 @@ export default function App () {
   const ModalSwitch = () => {
     const  location  = useLocation();
     const background = location.state === null ? false: location.state.isModal;
+
+    const ingModal = 
+      background ?
+      <Route path='ingredients/:ingredientId' element={<Modal><IngredientDetails /></Modal>} /> :
+      <Route path='ingredients/:ingredientId' element={<IngredientDetails />} />
    
   return (
     <>
       <Routes>
         <Route path='/' element={<LayoutPage />}>
           <Route index element={<MainPage />} />
-          {background ? (
-            <Route path='ingredients/:ingredientId' element={<Modal><IngredientDetails /></Modal>} />
-          ): (
-            <Route path='ingredients/:ingredientId' element={<IngredientDetails />} />
-          )}
+          {ingModal}
           <Route path="login" element={<LoginPage />} />
           <Route path="profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} >
             <Route index element={<ProtectedRouteElement element={<ProfileInput />}/>} />

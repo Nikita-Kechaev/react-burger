@@ -1,9 +1,9 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { Outlet, NavLink} from 'react-router-dom';
 import styles from './profile.module.css'
 import { useDispatch, useSelector} from 'react-redux';
-import { signOut, refreshData } from '../../services/actions/user'
+import { signOut, refreshData, getUser } from '../../services/actions/user'
 
 export const ProfileInput = () => {
     const inputRef = useRef(null)
@@ -13,16 +13,21 @@ export const ProfileInput = () => {
     const [form, setValue] = useState({
         name: user.name,
         email: user.email,
+        password: 'password',
         initialName: user.name,
         initialEmail: user.email,
-        inputNameDis: true
+        initialPassword: 'password',
+        inputNameDis: true,
+        formChange: false
     });
 
     const canelInput = () => {
         setValue({
             ...form,
+            formChange: false,
             name: form.initialName,
-            email: form.initialEmail
+            email: form.initialEmail,
+            password: form.initialPassword
         })
     }
 
@@ -35,7 +40,7 @@ export const ProfileInput = () => {
     }
 
     const onChange = e => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+        setValue({ ...form, formChange: true, [e.target.name]: e.target.value });
     };
 
     const onBlur = e => {
@@ -46,12 +51,31 @@ export const ProfileInput = () => {
     }
 
     const saveUserData = () => {
-        dispatch(refreshData(form))
+        dispatch(refreshData({'email' : form.email, 'name': form.name}))
     }
 
+    useEffect(() => {
+        setValue({
+            ...form,
+            initialName: user.name,
+            initialEmail: user.email,
+            initialPassword: 'password',
+            inputNameDis: true,
+            formChange: false
+        })
+    }, [user])
+
+    const buttons = 
+        (
+            <div>
+                <Button htmlType="button" disabled={!form.formChange} onClick={saveUserData} extraClass="mr-5">Сохранить</Button>
+                <Button htmlType="button" disabled={!form.formChange} onClick={canelInput}>Отменить </Button>
+            </div>
+        )
+    
     return (
         user &&
-        <div className={`${styles.inputsContainer} pt-6`}>
+        <form className={`${styles.inputsContainer} pt-6`}>
             <Input
                 ref={inputRef}
                 icon={'EditIcon'}
@@ -74,13 +98,12 @@ export const ProfileInput = () => {
             <PasswordInput
                 icon="EditIcon"
                 extraClass="mb-6"
-                value='**************'
+                value={form.password}
+                onChange={onChange}
+                name='password'
             />
-            <div>
-                <Button htmlType="button" extraClass="mr-5" onClick={saveUserData} >Сохранить</Button>
-                <Button htmlType="button" onClick={canelInput}>Отменить </Button>
-            </div>
-        </div>
+            {buttons}
+        </form>
         
 
     )
