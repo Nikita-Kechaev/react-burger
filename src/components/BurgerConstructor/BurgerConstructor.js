@@ -40,10 +40,13 @@ export default function BurgerConstructor () {
     const getOrdeNumber = (ing, bun) => {
         const ingBun = ing.concat(bun)
         const ids = ingBun.map(item => item._id)
-        dispatch({
-            type: GET_ORDER_REQUEST
-        })
-        if (!user) {navigate('/login')} else { dispatch(getOrder(ids))}
+        if (!user) {navigate('/login')}
+        else {
+            dispatch({
+                type: GET_ORDER_REQUEST
+            })
+            dispatch(getOrder(ids))
+        }
     }
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {

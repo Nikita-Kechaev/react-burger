@@ -13,13 +13,19 @@ export const ProfileInput = () => {
     const [form, setValue] = useState({
         name: user.name,
         email: user.email,
-        password: 'password',
+        password: '',
         initialName: user.name,
         initialEmail: user.email,
-        initialPassword: 'password',
+        initialPassword: '',
         inputNameDis: true,
         formChange: false
     });
+
+    const dataToSend = ({
+        'email': form.email,
+        'name': form.name,
+        'password': form.password
+    })
 
     const canelInput = () => {
         setValue({
@@ -50,8 +56,9 @@ export const ProfileInput = () => {
         })
     }
 
-    const saveUserData = () => {
-        dispatch(refreshData({'email' : form.email, 'name': form.name}))
+    const saveUserData = (e) => {
+        e.preventDefault();
+        dispatch(refreshData(dataToSend))
     }
 
     useEffect(() => {
@@ -59,7 +66,7 @@ export const ProfileInput = () => {
             ...form,
             initialName: user.name,
             initialEmail: user.email,
-            initialPassword: 'password',
+            initialPassword: '',
             inputNameDis: true,
             formChange: false
         })
@@ -68,15 +75,16 @@ export const ProfileInput = () => {
     const buttons = 
         (
             <div>
-                <Button htmlType="button" disabled={!form.formChange} onClick={saveUserData} extraClass="mr-5">Сохранить</Button>
+                <Button htmlType="submit" disabled={!form.formChange} extraClass="mr-5">Сохранить</Button>
                 <Button htmlType="button" disabled={!form.formChange} onClick={canelInput}>Отменить </Button>
             </div>
         )
     
     return (
         user &&
-        <form className={`${styles.inputsContainer} pt-6`}>
+        <form onSubmit={saveUserData} className={`${styles.inputsContainer} pt-6`}>
             <Input
+                type='text'
                 ref={inputRef}
                 icon={'EditIcon'}
                 placeholder={'Имя'}
@@ -89,11 +97,12 @@ export const ProfileInput = () => {
                 onBlur={onBlur}
             />
             <EmailInput
-                extraClass="mb-6"
-                isIcon={true}
-                value={form.email}
                 onChange={onChange}
-                name='email'
+                value={form.email}
+                name={'email'}
+                placeholder="E-mail"
+                isIcon={true}
+                extraClass="mb-6"
                 />
             <PasswordInput
                 icon="EditIcon"
@@ -105,7 +114,6 @@ export const ProfileInput = () => {
             {buttons}
         </form>
         
-
     )
 }
 

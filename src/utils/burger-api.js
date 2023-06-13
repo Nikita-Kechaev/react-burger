@@ -124,6 +124,7 @@ export const refreshUserData = async form => {
         const result = checkReponse(response)
         return result
     } catch (err){
+        console.log(err)
         return err
     }
 }
