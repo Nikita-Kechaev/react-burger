@@ -1,42 +1,48 @@
-import React, { useEffect } from 'react';
-import styles from './App.module.css'
-import AppHeader from '../AppHeader/AppHeader'
-import { useDispatch, useSelector } from 'react-redux';
-import BurgerIngridients from '../BurgerIngredients/BurgerIngridients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { getIngridients } from '../../services/actions/ingredients';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ProfilePage, ProfileInput, ProfileOrders } from '../pages/profile-page'
+import { LoginPage } from '../pages/login-page'
+import { MainPage } from '../pages/main-page';
+import { RegisterPage } from '../pages/registration-page';
+import { ForgotPasswordPage } from '../pages/forgot-password';
+import { ResetPasswordPage } from '../pages/reset-password';
+import { LayoutPage } from '../pages/layout';
+import { OrderList } from '../pages/order-list-page';
+import { ProtectedRouteElement } from '../protected-route/protected-route';
+import { useLocation } from 'react-router-dom';
+import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import Modal from '../Modal/Modal';
 
 
 export default function App () {
+  const ModalSwitch = () => {
+    const  location  = useLocation();
+    const background = location.state === null ? false: location.state.isModal;
 
-  const dispatch = useDispatch();
-  const { isLoading, hasError } = useSelector(store => store.ingredients)
-
-  useEffect(
-    () => {
-      dispatch(getIngridients());
-    },
-    []
-  );
-
+    const ingModal = 
+      background ?
+      <Route path='ingredients/:ingredientId' element={<Modal><IngredientDetails /></Modal>} /> :
+      <Route path='ingredients/:ingredientId' element={<IngredientDetails />} />
+   
   return (
     <>
-      <AppHeader />
-      { !isLoading && !hasError? (
-      <main className={styles.main}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngridients />
-            <BurgerConstructor />
-          </DndProvider>
-      </main>
-      ):(
-      <main className={styles.main}>
-        <p className="text text_type_main-medium">Подождите. Идёт загрузка данных</p>
-      </main>
-      )}
+      <Routes>
+        <Route path='/' element={<LayoutPage />}>
+          <Route index element={<MainPage />} />
+          {ingModal}
+          <Route path="login" element={<LoginPage />} />
+          <Route path="profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} >
+            <Route index element={<ProtectedRouteElement element={<ProfileInput />}/>} />
+            <Route path="orders" element={<ProtectedRouteElement element={<ProfileOrders />}/>} />
+          </Route>
+          <Route path="register/" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />}/>
+          <Route path="reset-password"  element={<ResetPasswordPage />} />
+          <Route path="order-list" element={<OrderList />} />
+        </Route>
+      </Routes>
     </>
   );
+}
+
+return (<Router><ModalSwitch /></Router>)
 }

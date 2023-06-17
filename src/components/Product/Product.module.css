@@ -33,3 +33,8 @@
     top: 0;
     right: 20px;
 }
+
+.link {
+    text-decoration: none;
+    color: #F2F2F3
+}

@@ -27,3 +27,36 @@ li {
     align-items: center;
     justify-content: center;
 }
+
+.navElemCenter {
+    display: flex;
+    justify-content: center;
+    width: 33%;
+}
+
+.navElemRight {
+    display: flex;
+    justify-content:center;
+    width: 33%;
+}
+
+.navElemLeft {
+    display: flex;
+    justify-content: left;
+    width: 33%;
+}
+
+.activeNav {
+    text-decoration: none;
+    color: #F2F2F3;
+}
+
+.inactiveNav {
+    text-decoration: none;
+    color: #8585AD;
+}
+
+nav a :hover {
+    color: #F2F2F3;
+    transition: 1s;
+}

@@ -8,11 +8,15 @@ import styles from './Modal.module.css'
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 
 export default function Modal (props) {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const onClose = () => {
         dispatch({
@@ -21,9 +25,8 @@ export default function Modal (props) {
         dispatch({
             type: CLOSE_ORDER_MODAL
         });
-        dispatch({
-            type: CLEAR_CONSTRUCTOR
-        })
+        !location.state && dispatch({type: CLEAR_CONSTRUCTOR});
+        location.state && navigate(-1)
     }
 
     return ReactDOM.createPortal(

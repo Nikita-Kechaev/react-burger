@@ -17,13 +17,13 @@ export const orderReducer = (state = initialState, action) => {
         case GET_ORDER_REQUEST: {
             return {
                 ...state,
+                isVisible: true,
                 orderRequest: true
             };
         }
         case GET_ORDER_SUCCESS: {
             return { 
                 ...state,
-                isVisible: true,
                 orderFailed: false, 
                 orderNumber: action.order, 
                 orderRequest: false 
@@ -40,7 +40,7 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isVisible: false,
-                orderNuber: ''
+                orderNumber: ''
             }
         }
         default: {
