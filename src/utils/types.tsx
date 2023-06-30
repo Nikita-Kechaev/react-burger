@@ -1,10 +1,3 @@
-export type RootState = {
-    user?: any; 
-    constructorArr?: any;
-    order?: any;
-    ingredients?: any
-}
-
 export enum IngredientType {
     bun = 'bun',
     sauce = 'sauce',
@@ -27,6 +20,15 @@ export type Ingredient = {
     uuid?: string;
 };
 
+
+export type RootState = {
+    user?: any; 
+    constructorArr?: any;
+    order?: any;
+    ingredients?: any;
+    bun?: any;
+}
+
 export type TMoveCard = {
     dragIndex:string, 
     hoverIndex:string
@@ -40,5 +42,6 @@ export type TMainElementProps = {
 }
 
 export type TModalProps = {
-    children: React.ReactNode;
+    onClose: () => void;
+    children?: React.ReactNode;
 }

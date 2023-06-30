@@ -1,6 +1,6 @@
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './AppHeader.module.css';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useCallback, FC } from 'react';
 
 
@@ -31,7 +31,9 @@ export const AppHeader: FC  = () => {
                     </ul>
                 </div>
                 <div className={styles.navElemCenter}>
-                    <Logo />
+                    <Link to={'/'}>
+                        <Logo />
+                    </Link>
                 </div>
                 <div className={styles.navElemRight}>
                     <NavLink to="profile" className={isActiveLink}>

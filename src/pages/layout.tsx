@@ -1,10 +1,10 @@
-import { getIngridients } from '../../services/actions/ingredients';
+import { getIngridients } from '../services/actions/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppHeader } from '../AppHeader/AppHeader';
+import { AppHeader } from '../components/AppHeader/AppHeader';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from  './layout.module.css'
-import { RootState } from "../../utils/types"
+import { RootState } from "../utils/types"
 import { FC } from 'react';
 
 

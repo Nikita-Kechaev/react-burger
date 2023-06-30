@@ -3,9 +3,9 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 import { Outlet, NavLink} from 'react-router-dom';
 import styles from './profile.module.css'
 import { useDispatch, useSelector} from 'react-redux';
-import { signOut, refreshData } from '../../services/actions/user'
+import { signOut, refreshData } from '../services/actions/user'
 import { FC } from 'react';
-import { RootState } from "../../utils/types"
+import { RootState } from "../utils/types"
 
 export const ProfileInput: FC = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);;
@@ -131,7 +131,7 @@ export const ProfilePage: FC = () => {
     const user = useSelector((store: RootState) => store.user.user)
     const dispatch = useDispatch();
 
-    let onClick = useCallback(
+    const onClick = useCallback(
         (e: React.FormEvent) => {
           e.preventDefault();
           dispatch<any>(signOut());

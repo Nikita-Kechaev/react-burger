@@ -8,21 +8,21 @@ export const GET_CURRENT_ITEM = 'GET_CURRENT_ITEM';
 export const CLOSE_CURRENT_ITEM = 'CLOSE_CURRENT_ITEM'
 
 export const getIngridients = () => {
-  return function(dispatch:any) {
+  return async function(dispatch:any) {
     dispatch({
       type: GET_ITEMS_REQUEST
     });
-    getItemsRequest().then(res => {
-      if (res && res.success) {
+    await getItemsRequest().then(res => {
+      if (res) {
         dispatch({
           type: GET_ITEMS_SUCCESS,
-          items: res.result
+          items: res
         });
       } else {
         dispatch({
           type: GET_ITEMS_FAILED,
         });
       }
-    });
+    }).catch((err) => console.log(err));
   };
 }

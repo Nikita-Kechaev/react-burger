@@ -1,17 +1,10 @@
 import React from 'react';
 import styles from './ModalOverlay.module.css';
-import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
-import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
-import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { TModalProps } from "../../utils/types"
 import  { FC} from 'react';
 
 
-export const  ModalOverlay: FC = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const location = useLocation()
+export const  ModalOverlay: FC<TModalProps> = (props) => {
 
     React.useEffect(()=>{
         document.addEventListener("keydown", escapeButton);
@@ -20,24 +13,13 @@ export const  ModalOverlay: FC = () => {
         }
       }, [])
     
-    const onClose = () => {
-        dispatch({
-            type: CLOSE_CURRENT_ITEM
-        });
-        dispatch({
-            type: CLOSE_ORDER_MODAL
-        });
-        !location.state && dispatch({type: CLEAR_CONSTRUCTOR});
-        location.state && navigate(-1)
-    }
-    
-    const escapeButton = (e: any) => {
+    const escapeButton = (e:KeyboardEvent) => {
         if (e.code == "Escape") {
-            onClose()
+            props.onClose()
         }
     }
     return (
-        <div className={styles.overlay} onClick={() => onClose()}>
+        <div className={styles.overlay} onClick={props.onClose}>
         </div> 
     )
 }

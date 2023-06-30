@@ -5,8 +5,7 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR'
 import uuid from 'react-uuid';
 import { Ingredient } from "../../utils/types"
 
-
-export const createUuidToItem = (item:any) => {
+export const createUuidToItem = (item:Ingredient) => {
     return function(dispatch:any) {
         const itemWithUuid = {
             ...item,

@@ -1,4 +1,6 @@
 import {
+    GET_USER_REQUEST_START,
+    GET_USER_REQUEST_END,
     GET_USER_AUTH_SUCCESS,
     GET_USER_LOGIN_SUCCESS,
     GET_LOGOUT,
@@ -16,11 +18,23 @@ const initialState = {
     errorMessage: '',
     sendEmail: false,
     email: '',
-    isLoading: false
+    isLoading: '',
 }
 
 export const userReducer = (state = initialState, action:any) => {
     switch (action.type) {
+        case GET_USER_REQUEST_START: {
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
+        case GET_USER_REQUEST_END: {
+            return {
+                ...state,
+                isLoading: false,
+            }
+        }
         case GET_USER_AUTH_SUCCESS: {
             return {
                 ...state,
@@ -68,7 +82,6 @@ export const userReducer = (state = initialState, action:any) => {
             }
         }
         case SEND_FORGOT_PASS_MESS_FAILED: {
-            console.log('неудача')
             return{
                 ...state,
                 sendEmail: false,

@@ -3,10 +3,10 @@ import styles from './login.module.css'
 import {  useState, useEffect, useCallback } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, regUser } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie'
+import { getUser, regUser } from '../services/actions/user';
+import { getCookie } from '../utils/cookie'
 import { FC } from 'react';
-import { RootState } from "../../utils/types"
+import { RootState } from "../utils/types"
 
 
 export const RegisterPage: FC = () => {

@@ -6,11 +6,31 @@ import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 import { Product } from '../Product/Product'
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
+import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
+import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
+import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 
 import { RootState } from "../../utils/types"
 
 
 export const BurgerIngridients:FC = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const onClose = () => {
+        dispatch({
+            type: CLOSE_CURRENT_ITEM
+        });
+        dispatch({
+            type: CLOSE_ORDER_MODAL
+        });
+        !location.state && dispatch({type: CLEAR_CONSTRUCTOR});
+        location.state && navigate(-1)
+    }
 
     const [current, setCurrent] = useState('bun')
 
@@ -78,7 +98,7 @@ export const BurgerIngridients:FC = () => {
                     </div>
                 ))}
             </div>
-            {modalIsVisible && <Modal><IngredientDetails /></Modal>}
+            {modalIsVisible && <Modal onClose={() => onClose()}><IngredientDetails /></Modal>}
         </div>
     )
 }

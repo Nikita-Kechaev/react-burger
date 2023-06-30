@@ -1,12 +1,11 @@
-import { BurgerIngridients } from '../BurgerIngredients/BurgerIngridients';
-import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
+import { BurgerIngridients } from '../components/BurgerIngredients/BurgerIngridients';
+import { BurgerConstructor } from '../components/BurgerConstructor/BurgerConstructor';
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { FC } from 'react';
 
-
-
-export const MainPage:FC = () => {
+// тип?
+export const MainPage:FC<any> = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <BurgerIngridients />

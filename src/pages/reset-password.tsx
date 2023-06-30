@@ -4,8 +4,8 @@ import styles from './login.module.css'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { FC, useCallback } from 'react';
-import { RootState } from "../../utils/types"
-import { resetPassword } from '../../services/actions/user';
+import { RootState } from "../utils/types"
+import { resetPassword } from '../services/actions/user';
 
 export const ResetPasswordPage: FC = () => {
     const navigate = useNavigate();

@@ -15,9 +15,8 @@ export const Product:FC<IProductPropps> = ({ ingridient }) => {
     const ingredientId = ingridient['_id']
     const bun = useSelector((store: RootState) => store.constructorArr.bun)
     const ingridients = useSelector((store: RootState) => store.constructorArr.constructorItems)
-    const count = ingridients.filter((item: Ingredient) => item._id === ingridient._id).length
+    const count = ingridients? ingridients.filter((item: Ingredient) => item._id === ingridient._id).length : 0
     
-
     const dispatch = useDispatch()
 
     const [{isDrag}, dragRef] = useDrag({
@@ -42,7 +41,7 @@ export const Product:FC<IProductPropps> = ({ ingridient }) => {
             ref={dragRef}
             key={ingredientId}
             to={`/ingredients/${ingredientId}`}
-            state = {{ isModal: true }}
+            state = {{ isModal: true}}
             className={styles.link}
         >
             <div 

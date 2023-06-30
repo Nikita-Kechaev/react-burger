@@ -23,6 +23,6 @@ export const getOrder = (ids:string[]) => {
           type: GET_ORDER_FAILED
         });
       }
-    });
+    }).catch((err) => console.log(err));
   };
 }

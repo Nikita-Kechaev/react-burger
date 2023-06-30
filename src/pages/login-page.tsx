@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css'
 import { useState, useCallback, useEffect } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
-import { signIn, getUser } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie'
-import { RootState } from "../../utils/types"
+import { signIn, getUser } from '../services/actions/user';
+import { getCookie } from '../utils/cookie'
+import { RootState } from "../utils/types"
 import { FC } from 'react';
 
 
@@ -21,7 +21,7 @@ export const LoginPage: FC = () => {
     };
 
     
-    let onClick = useCallback(
+    const onClick = useCallback(
         (e: React.FormEvent) => {
           e.preventDefault();
           dispatch<any>(signIn(form));

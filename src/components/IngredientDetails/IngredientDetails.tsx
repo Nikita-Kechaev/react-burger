@@ -8,17 +8,12 @@ import { RootState, Ingredient } from "../../utils/types"
 
 export const IngredientDetails: FC = () => {
     const {ingredientId}  = useParams()
-    let currentItem;
     const itemModal = useSelector((store:RootState) => store.ingredients.currentItem)
     const items = useSelector((store:RootState) => store.ingredients.items)
 
     const itemURL = items ? items.filter((item:Ingredient) => item._id === ingredientId)[0] : ''
 
-    if (ingredientId) {
-        currentItem = itemURL
-    } else {
-        currentItem = itemModal
-    }
+    const currentItem = ingredientId ? itemURL : itemModal
 
     return (
         <div className={styles.maintContainer }>

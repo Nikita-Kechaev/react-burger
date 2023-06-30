@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, FC } from 'react';
+import { useEffect, useCallback, FC } from 'react';
 import { useDrop } from "react-dnd";
 
 import {  Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -12,40 +12,70 @@ import { Modal } from '../Modal/Modal';
 import { createUuidToItem, MOVE_CARD } from '../../services/actions/constructor'
 import { getOrder } from '../../services/actions/order';
 import styles from './BurgerConstructor.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { GET_ORDER_REQUEST } from '../../services/actions/order'
+import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
+import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
+import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
+
+import { getUser } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie'
 
 import { RootState, Ingredient } from "../../utils/types"
 
 export const BurgerConstructor: FC = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const location = useLocation()
 
+    const onClose = () => {
+        dispatch({
+            type: CLOSE_CURRENT_ITEM
+        });
+        dispatch({
+            type: CLOSE_ORDER_MODAL
+        });
+        !location.state && dispatch({type: CLEAR_CONSTRUCTOR});
+        location.state && navigate(-1)
+    }
 
     const ingridients = useSelector((store: RootState) => store.constructorArr.constructorItems)
     const user = useSelector((store: RootState) => store.user.user)
-
-    const total:number = ingridients.reduce((acc:any, item:Ingredient) => acc + item.price, 0)
+    const total:number = ingridients ? ingridients.reduce((acc:any, item:Ingredient) => acc + item.price, 0) : 0
     const bun = useSelector((store: RootState) => store.constructorArr.bun)
     const bunPrice:number = bun ? bun.price * 2 : 0
     const modalIsVisible:boolean = useSelector((store: RootState) => store.order.isVisible)
 
     const [, dropTarget] = useDrop({
         accept: "ingridients",
-        drop(item) {
+        drop(item: Ingredient) {
             dispatch<any>(createUuidToItem(item))
         },
     });
 
-    const getOrdeNumber = (ing:Ingredient[], bun:Ingredient) => {
+    const init = async () => {
+        const isToken = getCookie('accessToken')
+        if (isToken) {
+            await dispatch<any>(getUser());
+        }
+    }
+    
+    useEffect(() => {
+        init()
+    }, [])
+
+    const getOrdeNumber = async (ing:Ingredient[], bun:Ingredient) => {
         const ingBun = ing.concat(bun)
         const ids = ingBun.map((item:Ingredient) => item._id)
-        if (!user) {navigate('/login')}
-        else {
+        if (user) 
+        {
             dispatch({
                 type: GET_ORDER_REQUEST
             })
             dispatch<any>(getOrder(ids))
+        }
+        else {
+            navigate('/login')
         }
     }
 
@@ -99,7 +129,7 @@ export const BurgerConstructor: FC = () => {
                 </Button>
                 }
             </div>
-            {modalIsVisible && <Modal><OrderDetails /></Modal>}
+            {modalIsVisible && <Modal onClose={() => onClose()}><OrderDetails /></Modal>}
         </div>
     )
 }
