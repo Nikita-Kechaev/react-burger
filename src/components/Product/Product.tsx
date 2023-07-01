@@ -1,7 +1,7 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { GET_CURRENT_ITEM } from '../../services/actions/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './Product.module.css';
 import { useDrag } from "react-dnd";
 import { RootState, Ingredient } from "../../utils/types"
@@ -12,6 +12,7 @@ interface IProductPropps  {
 }
 
 export const Product:FC<IProductPropps> = ({ ingridient }) => {
+    const location = useLocation()
     const ingredientId = ingridient['_id']
     const bun = useSelector((store: RootState) => store.constructorArr.bun)
     const ingridients = useSelector((store: RootState) => store.constructorArr.constructorItems)
@@ -41,7 +42,7 @@ export const Product:FC<IProductPropps> = ({ ingridient }) => {
             ref={dragRef}
             key={ingredientId}
             to={`/ingredients/${ingredientId}`}
-            state = {{ isModal: true}}
+            state = {{ background: location}}
             className={styles.link}
         >
             <div 

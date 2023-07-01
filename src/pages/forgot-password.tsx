@@ -7,6 +7,7 @@ import { getUser, forgPass } from '../services/actions/user';
 import { getCookie } from '../utils/cookie'
 import { FC } from 'react';
 import { RootState } from "../utils/types"
+import { SEND_FORGOT_PASS_MESS_FAILED } from '../services/actions/user'
 
 
 export const ForgotPasswordPage:FC = () => {
@@ -22,7 +23,13 @@ export const ForgotPasswordPage:FC = () => {
     const onClick = useCallback(
         (e: React.FormEvent) => {
           e.preventDefault();
+          if (form.email === '') {
+            dispatch({
+                type: SEND_FORGOT_PASS_MESS_FAILED
+            })
+          } else {
           dispatch<any>(forgPass(form));
+        }
         },
         [ form, isSendMail]
     );

@@ -20,7 +20,6 @@ import { FC } from 'react';
 
 export const  App: FC = () =>{
   const ModalSwitch = () => {
-
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const location = useLocation()
@@ -33,25 +32,17 @@ export const  App: FC = () =>{
             type: CLOSE_ORDER_MODAL
         });
         !location.state && dispatch({type: CLEAR_CONSTRUCTOR});
-        location.state && navigate(-1)
+        navigate(-1)
     }
 
-
-    const background = location.state === null ? false: location.state.isModal;
-
-    const ingModal = 
-    background ?
-      <Route index path='ingredients/:ingredientId' element={<MainPage element={<Modal onClose={()=>onClose()}><IngredientDetails /></Modal>} />} />:
-      <>
-        <Route path='ingredients/:ingredientId' element={<IngredientDetails />} />
-      </>
-
+    const background = location.state && location.state.background;
+ 
   return (
     <>
       <Routes>
         <Route path='/' element={<LayoutPage />}>
           <Route index element={<MainPage />} />
-          {ingModal}
+          <Route path='ingredients/:ingredientId' element={<IngredientDetails />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} >
             <Route index element={<ProtectedRouteElement element={<ProfileInput />}/>} />
@@ -61,11 +52,17 @@ export const  App: FC = () =>{
           <Route path="forgot-password" element={<ForgotPasswordPage />}/>
           <Route path="reset-password"  element={<ResetPasswordPage />} />
           <Route path="order-list" element={<OrderList />} />
+          {background && (
+            <Route index  path='ingredients/:ingredientId' element={<MainPage element={<Modal onClose={()=>onClose()}><IngredientDetails /></Modal>} />} />
+          )}
         </Route>
       </Routes>
     </>
   );
 }
 
-return (<Router><ModalSwitch /></Router>)
+return (
+  <Router>
+    <ModalSwitch />
+  </Router>)
 }

@@ -34,7 +34,6 @@ import {
 
 const userAuth = async (func:any, dispatch:any) => {
      await func.then((res:any) => {
-        if (res.success) {
             let accessToken;
             let refreshToken;
             accessToken = res.accessToken.split('Bearer ')[1]
@@ -47,13 +46,12 @@ const userAuth = async (func:any, dispatch:any) => {
                 type: GET_USER_LOGIN_SUCCESS,
                 data: res
             })
-        } else {
-            dispatch({
-                type: GET_USER_LOGIN_FAILED,
-                data: res
-            })
         }
-    }).catch((err:Error) => console.log(err.message))
+    ).catch((res:any) => dispatch({
+            type: GET_USER_LOGIN_FAILED,
+            data: res
+        })
+    )
 }
 
 export const regUser = (form:any) => {
@@ -70,18 +68,16 @@ export const signIn = (form:any)  => {
 
 export const forgPass = (email:any) => {
     return async function (dispatch:any) {
-        await forgotPassword(email).then((res) => {
-            if (res.success && email) {
-                dispatch({
-                    type: SEND_FORGOT_PASS_MESS_SUCCES,
-                    data: email
-                })
-            } else {
-                dispatch({
-                    type: SEND_FORGOT_PASS_MESS_FAILED
-                })
-            }
-        }).catch(err => console.error(err.message))
+        await forgotPassword(email).then(() => {
+            dispatch({
+                type: SEND_FORGOT_PASS_MESS_SUCCES,
+                data: email
+            })
+        }).catch(
+            dispatch({
+                type: SEND_FORGOT_PASS_MESS_FAILED
+            })
+        )
     }
 }
 
@@ -114,54 +110,40 @@ export const getUser = () => (dispatch:any) => {
 
 export const resetPassword = (form:any) => {
     return async function(dispatch:any) {
-        await resetUserPassword(form).then((res) => {
-            if (res.success) {
-                dispatch({
-                    type: SEND_RESET_PASS_MESS_SUCCES
-                })
-            } else {
-                dispatch({
-                    type: SEND_RESET_PASS_MESS_FAILED
-                })
-            }
-        }).catch(err => console.error(err.message))
+        await resetUserPassword(form).then(() => {
+        dispatch({type: SEND_RESET_PASS_MESS_SUCCES})   
+        }).catch(dispatch({type: SEND_RESET_PASS_MESS_FAILED}))
     }
 }
 
 export const signOut = () => {
     return async function(dispatch:any) {
         await logOutRequest().then((res) => {
-            if (res.success) {
+
                 deleteCookie('accessToken')
                 deleteCookie('refreshToken')
                 dispatch({
                     type: GET_LOGOUT,
                     data: res
                 })
-            } else {
-                dispatch({
-                    type: GET_LOGOUT_FAILED,
-                    data: res
-                })
-            }
-        }).catch(err => console.error(err.message))
+     
+        }).catch((res) => dispatch({
+            type: GET_LOGOUT_FAILED,
+            data: res
+        }))
     }
 }
 
 export const refreshData = (form:any) => {
     return async function(dispatch:any) {
         await refreshUserData(form).then((res) => {
-            if (res.success){
                 dispatch({
                     type: GET_USER_REFRESH_DATA_SUCCESS,
                     data: res
                 })
-            } else {
-                dispatch({
-                    type: GET_USER_REFRESH_DATA_FAILED,
-                    data: res 
-                })
-            }
-        }).catch(err => console.error(err.message))
+        }).catch((res) => dispatch({
+            type: GET_USER_REFRESH_DATA_FAILED,
+            data: res 
+        }))
     }
 }

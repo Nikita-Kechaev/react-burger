@@ -62,10 +62,7 @@ export const constructorReducer = (state = initialState, action:any) => {
             }
         }
         default : {
-            return {
-                // state без ... ломает
-                ...state
-            }
+            return state;
         }
     }
 }
