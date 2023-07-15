@@ -1,0 +1,114 @@
+.order_card_main_container {
+    width: 100%;
+    min-height: 250px;
+    background-color:#1c1c21;
+    margin-top: 5px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.order_top {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order_number {
+    margin-left: 20px;
+}
+
+.order_date {
+    margin-right: 20px;
+}
+
+.order_mid {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.order_buttom {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image_container_wrap {
+    display: flex;
+    align-items: center;
+}
+
+.ing_image_container {
+    position: relative;
+    margin: 0 0 0 -30px;
+    width: 80px;
+    height: 80px;
+}
+
+.ing_image_container:first-child {
+    margin: 0 0 0 20px;
+}
+
+.ing_image_container:before {
+    content: "";
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(to right, rgb(128, 26, 178), rgb(76, 76, 255));
+}
+
+.imgage_circle {
+    width: 78px;
+    height: 76px;
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 2px;
+    right: 1px;
+}
+
+.last_image {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    z-index: 3;
+    background: black;
+    opacity: 0.6;
+    border-radius: 50%;
+}
+
+.last_image_text {
+    position: absolute;
+    z-index: 4;
+    top: 35%;
+    left: 40%;
+}
+
+.price_container {
+    display: flex;
+    align-items: center;
+    gap:10px;
+    margin-right: 20px;
+}
+
+.link {
+    text-decoration: none;
+    color: #F2F2F3
+}
+
+.orderStatus {
+    margin-left: 20px;
+}

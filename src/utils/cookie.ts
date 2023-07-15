@@ -1,4 +1,4 @@
-export function getCookie(name:string) {
+export function getCookie(name:string):any {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );

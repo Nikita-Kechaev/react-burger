@@ -1,27 +1,31 @@
 import {  getOrderRequest } from '../../utils/burger-api'
+import { AppThunk } from '../../utils/types-index';
 
-export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+import {
+GET_ORDER_REQUEST, 
+GET_ORDER_SUCCESS, 
+GET_ORDER_FAILED, 
+} from '../constant'
 
-export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL'
+import {
+IGetOrderRequest,
+IGetOrderSuccess,
+IOrderFailed } from '../../utils/interfaces'
 
 
-export const getOrder = (ids:string[]) => {
+export const postOrderRequestAction = (): IGetOrderRequest => ({ type: GET_ORDER_REQUEST });
+export const postOrderFailedAction = (): IOrderFailed => ({ type: GET_ORDER_FAILED });
+export const postOrderSuccessAction = (number: string): IGetOrderSuccess => ({ type: GET_ORDER_SUCCESS, order:number });
+
+
+export const getOrder: AppThunk = (ids:string[]) => {
   return function(dispatch:any) {
-    dispatch({
-      type: GET_ORDER_REQUEST
-    });
+    dispatch(postOrderRequestAction());
     getOrderRequest(ids).then(res => {
       if (res && res.success) {
-        dispatch({
-          type: GET_ORDER_SUCCESS,
-          order: res.result.order.number
-        });
+        dispatch(postOrderSuccessAction(res.result.order.number));
       } else {
-        dispatch({
-          type: GET_ORDER_FAILED
-        });
+        dispatch(postOrderFailedAction());
       }
     }).catch((err) => console.log(err));
   };

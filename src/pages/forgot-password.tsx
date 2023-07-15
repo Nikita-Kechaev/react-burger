@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css'
 import { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
-import { getUser, forgPass } from '../services/actions/user';
-import { getCookie } from '../utils/cookie'
+import {  forgPass } from '../services/actions/user';
 import { FC } from 'react';
 import { RootState } from "../utils/types"
-import { SEND_FORGOT_PASS_MESS_FAILED } from '../services/actions/user'
+import { SEND_FORGOT_PASS_MESS_FAILED } from '../services/constant'
 
 
 export const ForgotPasswordPage:FC = () => {
@@ -38,21 +37,11 @@ export const ForgotPasswordPage:FC = () => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
-
-    const init = async () => {
-        const isToken = getCookie('accessToken')
-        if (isToken) {
-            await dispatch<any>(getUser());
-        }
-    }
-
     useEffect(() => {
-        init()
         if (isSendMail) {navigate('/reset-password')}
     }, [user, onClick])
 
 
-    if (user) {return(<Navigate to='/' replace={true} />)} else {
     return (
         <form onSubmit={onClick} className={styles.mainContainer}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
@@ -70,4 +59,4 @@ export const ForgotPasswordPage:FC = () => {
             </div>
         </form>
     )
-}}
+}

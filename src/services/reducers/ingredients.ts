@@ -4,7 +4,16 @@ import {
   GET_ITEMS_SUCCESS,
   GET_CURRENT_ITEM,
   CLOSE_CURRENT_ITEM
-} from '../actions/ingredients'
+} from '../constant'
+import { TBurgerIngredientActions } from "../../utils/interfaces"
+
+type TBurgerIngredientsInitialState = {
+  readonly currentItem: any,
+  readonly modalIsVisible: boolean,
+  readonly items: any,
+  readonly isLoading: boolean,
+  readonly hasError: boolean,
+}
 
 const initialState = {
   currentItem: '',
@@ -14,7 +23,7 @@ const initialState = {
   hasError: false,
 }
 
-export const ingReducer = (state = initialState, action:any) => {
+export const ingReducer = (state = initialState, action:TBurgerIngredientActions): TBurgerIngredientsInitialState => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {

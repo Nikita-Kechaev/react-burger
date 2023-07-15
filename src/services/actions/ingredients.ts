@@ -1,27 +1,38 @@
 import {  getItemsRequest } from '../../utils/burger-api'
 
-export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
-export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
+import {
+GET_ITEMS_REQUEST,
+GET_ITEMS_SUCCESS,
+GET_ITEMS_FAILED,
+GET_CURRENT_ITEM,
+CLOSE_CURRENT_ITEM
+} from '../constant'
 
-export const GET_CURRENT_ITEM = 'GET_CURRENT_ITEM';
-export const CLOSE_CURRENT_ITEM = 'CLOSE_CURRENT_ITEM'
+import {
+  IGetItemsRequest,
+  IGetItemsSuccess,
+  IGetItemsFailed,
+  ICloseCurrentItem,
+  IGetCurrentItem
+} from '../../utils/interfaces'
 
-export const getIngridients = () => {
+import { Ingredient } from "../../utils/types"
+import { AppThunk } from '../../utils/types-index';
+
+export const getIngredientsRequestAction = (): IGetItemsRequest => ({ type: GET_ITEMS_REQUEST });
+export const getIngredientsFailedAction = (): IGetItemsFailed => ({ type: GET_ITEMS_FAILED });
+export const getIngredientsSuccessAction = (data: Array<Ingredient>): IGetItemsSuccess => ({ type: GET_ITEMS_SUCCESS, items: data});
+export const closeCurrentItemACtion = (): ICloseCurrentItem => ({type: CLOSE_CURRENT_ITEM})
+export const getCurrentItemACtion = (item: Ingredient): IGetCurrentItem => ({type: GET_CURRENT_ITEM, item: item})
+
+export const getIngridients: AppThunk = () => {
   return async function(dispatch:any) {
-    dispatch({
-      type: GET_ITEMS_REQUEST
-    });
+    dispatch(getIngredientsRequestAction());
     await getItemsRequest().then(res => {
       if (res) {
-        dispatch({
-          type: GET_ITEMS_SUCCESS,
-          items: res
-        });
+        dispatch(getIngredientsSuccessAction(res));
       } else {
-        dispatch({
-          type: GET_ITEMS_FAILED,
-        });
+        dispatch(getIngredientsFailedAction());
       }
     }).catch((err) => console.log(err));
   };

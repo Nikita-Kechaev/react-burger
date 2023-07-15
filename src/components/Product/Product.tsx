@@ -1,11 +1,12 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { GET_CURRENT_ITEM } from '../../services/actions/ingredients';
-import { useDispatch, useSelector } from 'react-redux';
+import { GET_CURRENT_ITEM } from '../../services/constant';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Product.module.css';
 import { useDrag } from "react-dnd";
-import { RootState, Ingredient } from "../../utils/types"
+import { Ingredient } from "../../utils/types"
 import  { FC} from 'react';
+import { getCurrentItemACtion } from "../../services/actions/ingredients"
 
 interface IProductPropps  {
     ingridient: Ingredient
@@ -14,8 +15,8 @@ interface IProductPropps  {
 export const Product:FC<IProductPropps> = ({ ingridient }) => {
     const location = useLocation()
     const ingredientId = ingridient['_id']
-    const bun = useSelector((store: RootState) => store.constructorArr.bun)
-    const ingridients = useSelector((store: RootState) => store.constructorArr.constructorItems)
+    const bun = useSelector((store) => store.constructorArr.bun)
+    const ingridients = useSelector((store) => store.constructorArr.constructorItems)
     const count = ingridients? ingridients.filter((item: Ingredient) => item._id === ingridient._id).length : 0
     
     const dispatch = useDispatch()
@@ -29,10 +30,7 @@ export const Product:FC<IProductPropps> = ({ ingridient }) => {
     });
 
     const openModal = (ingridient: Ingredient) => {
-        dispatch({
-            type: GET_CURRENT_ITEM,
-            item: ingridient
-        })    
+        dispatch(getCurrentItemACtion(ingridient))    
     }
 
     const cardBack = isDrag ? styles.dragCard : styles.card;

@@ -1,19 +1,15 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './login.module.css'
-import { useState, useCallback, useEffect } from 'react'
-import { Link, useNavigate, Navigate } from 'react-router-dom';
-import { signIn, getUser } from '../services/actions/user';
-import { getCookie } from '../utils/cookie'
-import { RootState } from "../utils/types"
+import { useState, useCallback } from 'react'
+import { Link } from 'react-router-dom';
+import { signIn} from '../services/actions/user';
+
 import { FC } from 'react';
 
 
 export const LoginPage: FC = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const user = useSelector((store: RootState) => store.user.user)
     const [form, setValue] = useState({email: '', password: '' });
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,19 +25,6 @@ export const LoginPage: FC = () => {
         [form]
     );
     
-    const init = async () => {
-        const isToken = getCookie('accessToken')
-        if (isToken) {
-            await dispatch<any>(getUser());
-        }
-    }
-    
-    useEffect(() => {
-        init()
-        if (user) {navigate(-1)}
-    }, [user])
-
-    if (user) {return <Navigate to = '/' replace={true} />} else {
     return (
         <form onSubmit={onClick} className={styles.mainContainer}>
             <p className="text text_type_main-medium">Вход</p>
@@ -70,4 +53,4 @@ export const LoginPage: FC = () => {
             </div>
         </form>
     )
-}}
+}

@@ -1,17 +1,20 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { Outlet, NavLink} from 'react-router-dom';
+import { Outlet, NavLink, useLocation, Link} from 'react-router-dom';
 import styles from './profile.module.css'
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector} from '../utils/hooks';
 import { signOut, refreshData } from '../services/actions/user'
+import { getCookie } from '../utils/cookie'
 import { FC } from 'react';
+import { OrderCard } from '../components/OrderCard/OrderCard';
+import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../services/actions/webSocketAuth';
 import { RootState } from "../utils/types"
+import { TOrders } from '../utils/types';
 
 export const ProfileInput: FC = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);;
     const dispatch = useDispatch();
-    const user = useSelector((store: RootState) => store.user.user)
-
+    const user = useSelector((state) => state.user.user)
     const [form, setValue] = useState({
         name: user.name,
         email: user.email,
@@ -60,7 +63,7 @@ export const ProfileInput: FC = () => {
 
     const saveUserData = (e: React.FormEvent): void => {
         e.preventDefault();
-        dispatch<any>(refreshData(dataToSend))
+        dispatch(refreshData(dataToSend))
     }
 
     useEffect(() => {
@@ -119,17 +122,47 @@ export const ProfileInput: FC = () => {
     )
 }
 
-export const ProfileOrders: FC = () => {
+export const ProfileOrders: FC<any> = ({element}) => {
+
+    const dispatch = useDispatch();
+    const accessToken = getCookie("accessToken").replace('Bearer ', '');
+    const orders = useSelector((state) => state.wsAuth.orders);
+    
+
+    useEffect(() => {
+        dispatch(wsAuthConnectionStartAction(`wss://norma.nomoreparties.space/orders?token=${accessToken}`))
+        return () => {
+            dispatch(wsAuthConnectionClosedAction())
+        }
+    }, [dispatch, accessToken])
+
+
+    const ordersContent =  (
+        orders && orders.map((order:TOrders, index:number) => {
+            return (
+                <OrderCard order={order} key={index} />
+            )
+        }).reverse()
+    )
+
+
     return (
         <div className={`${styles.inputsContainer} pt-6`}>
-            <p className="text text_type_main-medium">Заказы в профиле</p>
+            <div className={`${styles.main_container} pl-5`}>
+                    <div className={styles.orders_container}>
+                        {ordersContent}
+                    </div>
+            </div>
+            {element}
         </div>
     )
 }
 
-export const ProfilePage: FC = () => {
+export const ProfilePage: FC<any> = ({ element }) => {
     const user = useSelector((store: RootState) => store.user.user)
     const dispatch = useDispatch();
+
+    const location = useLocation()
 
     const onClick = useCallback(
         (e: React.FormEvent) => {
@@ -140,6 +173,12 @@ export const ProfilePage: FC = () => {
     );
 
     const isActiveLink = useCallback<(isActive: any) => string>(({ isActive }) => (isActive ? `${styles.active} text` : `${styles.inactive} text`), [])
+    
+    const text = (
+        location.pathname === '/profile' ?
+        <p className="text text_type_main-default text_color_inactive">В этом разделе Вы можете изменить свои персональные данные</p>:
+        <p className="text text_type_main-default text_color_inactive">В этом разделе Вы можете посмотреть свою историю заказов</p>
+    )
 
     return (
         <div className={styles.mainContainer}>
@@ -160,10 +199,11 @@ export const ProfilePage: FC = () => {
                 </div>
                 </NavLink>
                 <div className={`${styles.tabContainer} mt-20`}>
-                    <p className="text text_type_main-default text_color_inactive">В этом разделе Вы можете изменить свои персональные данные</p>
+                    {text}
                 </div>
             </div>
             <Outlet />
+            {element}
         </div>
     )
 }

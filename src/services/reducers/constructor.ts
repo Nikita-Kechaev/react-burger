@@ -3,17 +3,22 @@ import {
     ADD_ITEMS_TO_CONSTRUCTOR,
     DELTE_ITEM_FROM_CONSTRUCTOR,
     CLEAR_CONSTRUCTOR
-} from '../actions/constructor';
+} from '../constant';
 import update from 'immutability-helper'
 import { Ingredient } from "../../utils/types"
+import { TBurgerConstructorActions } from "../../utils/interfaces"
 
+type TBurgerConstructorInitialState = {
+    readonly bun: any;
+    readonly constructorItems: any;
+}
 
 const initialState = {
     bun: '',
     constructorItems: [],
 }
 
-export const constructorReducer = (state = initialState, action:any) => {
+export const constructorReducer = (state = initialState, action:TBurgerConstructorActions):TBurgerConstructorInitialState => {
     switch (action.type) {
         case MOVE_CARD : {
             if (action.dragIndex > action.hoverIndex) {

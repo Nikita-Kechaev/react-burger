@@ -1,27 +1,36 @@
-import {
-    GET_USER_REQUEST_START,
+import {GET_USER_REQUEST_START,
     GET_USER_REQUEST_END,
-    GET_USER_AUTH_SUCCESS,
     GET_USER_LOGIN_SUCCESS,
+    GET_USER_AUTH_SUCCESS,
     GET_LOGOUT,
     GET_LOGOUT_FAILED,
     GET_USER_REFRESH_DATA_SUCCESS,
     GET_USER_REFRESH_DATA_FAILED,
     SEND_FORGOT_PASS_MESS_SUCCES,
     SEND_FORGOT_PASS_MESS_FAILED,
-    SEND_RESET_PASS_MESS_SUCCES,
+    SEND_RESET_PASS_MESS_SUCCES ,
     SEND_RESET_PASS_MESS_FAILED,
-} from '../actions/user'
+} from '../constant'
+
+import { TUserActions } from "../../utils/interfaces"
+
+type TUserInitialState = {
+    readonly user: any;
+    readonly errorMessage: string,
+    readonly sendEmail: boolean,
+    readonly email: string,
+    readonly isLoading: boolean,
+}
 
 const initialState = {
     user: '',
     errorMessage: '',
     sendEmail: false,
     email: '',
-    isLoading: '',
+    isLoading: false,
 }
 
-export const userReducer = (state = initialState, action:any) => {
+export const userReducer = (state = initialState, action:TUserActions): TUserInitialState => {
     switch (action.type) {
         case GET_USER_REQUEST_START: {
             return {
