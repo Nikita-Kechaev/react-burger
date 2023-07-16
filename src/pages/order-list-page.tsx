@@ -1,25 +1,37 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useDispatch } from '../utils/hooks';
 import { OrderCard } from '../components/OrderCard/OrderCard';
 import styles from './feed.module.css'
 import { useSelector} from '../utils/hooks';
+import { TOrders } from '../utils/types';
+import { TOrderDetails } from "../utils/types"
+import { wsConnectionStartAction, wsConnectionClosedAction } from '../services/actions/webSocket';
 
-export const OrderList: FC<any> = ({ element }) => {
+export const OrderList: FC<TOrderDetails> = ({ element }) => {
 
-    const orders = useSelector((store: any) => store.ws.orders);
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'))
+        return () => {
+            dispatch(wsConnectionClosedAction())
+          }
+    }, [dispatch])
+
+    const orders = useSelector((store) => store.ws.orders);
     const total = useSelector((state) => state.ws.total);
     const totalToday = useSelector((state) => state.ws.totalToday);
     const ordersContent =  (
-        orders.map((order:any, index:any) => {
+        orders.map((order, index) => {
             return (
                 <OrderCard order={order} key={index} />
             )
         })
     )
 
-    const doneNumberArr:any = []
-    const inWorkNUmberArr:any = []
+    const doneNumberArr:Array<TOrders> = []
+    const inWorkNUmberArr:Array<TOrders> = []
 
-    orders.map((item:any) => {
+    orders.map((item) => {
         if (item.status === 'done') {
             doneNumberArr.push(item)
         } else {
@@ -28,7 +40,7 @@ export const OrderList: FC<any> = ({ element }) => {
     })
 
     const doneNumbers = (
-        doneNumberArr.map((item:any, index:any) => {
+        doneNumberArr.map((item, index) => {
             return (
                 <div key={index} className={`${styles.order_done_number} text text_type_digits-default`}>#{item.number}</div>
             )
@@ -36,7 +48,7 @@ export const OrderList: FC<any> = ({ element }) => {
     )
 
     const inWorkNumbers = (
-        inWorkNUmberArr.map((item:any, index:any) => {
+        inWorkNUmberArr.map((item, index) => {
             return (
                 <div key={index} className={`${styles.order_inwork_number} text text_type_digits-default`}>#{item.number}</div>
             )

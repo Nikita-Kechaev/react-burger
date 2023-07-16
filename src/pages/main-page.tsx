@@ -3,9 +3,10 @@ import { BurgerConstructor } from '../components/BurgerConstructor/BurgerConstru
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { FC} from 'react';
+import { TOrderDetails } from '../utils/types';
 
 // тип?
-export const MainPage:FC<any> = ({ element }) => {
+export const MainPage:FC<TOrderDetails> = ({ element }) => {
 
     return (
         <DndProvider backend={HTML5Backend}>

@@ -8,8 +8,8 @@ import { getCookie } from '../utils/cookie'
 import { FC } from 'react';
 import { OrderCard } from '../components/OrderCard/OrderCard';
 import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../services/actions/webSocketAuth';
-import { RootState } from "../utils/types"
 import { TOrders } from '../utils/types';
+import { TOrderDetails } from '../utils/types';
 
 export const ProfileInput: FC = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);;
@@ -122,7 +122,7 @@ export const ProfileInput: FC = () => {
     )
 }
 
-export const ProfileOrders: FC<any> = ({element}) => {
+export const ProfileOrders: FC<TOrderDetails> = ({ element }) => {
 
     const dispatch = useDispatch();
     const accessToken = getCookie("accessToken").replace('Bearer ', '');
@@ -158,8 +158,8 @@ export const ProfileOrders: FC<any> = ({element}) => {
     )
 }
 
-export const ProfilePage: FC<any> = ({ element }) => {
-    const user = useSelector((store: RootState) => store.user.user)
+export const ProfilePage: FC<TOrderDetails> = ({ element }) => {
+    const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch();
 
     const location = useLocation()
@@ -167,7 +167,7 @@ export const ProfilePage: FC<any> = ({ element }) => {
     const onClick = useCallback(
         (e: React.FormEvent) => {
           e.preventDefault();
-          dispatch<any>(signOut());
+          dispatch(signOut());
         },
         [user]
     );

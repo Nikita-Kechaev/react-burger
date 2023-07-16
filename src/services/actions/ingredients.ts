@@ -17,7 +17,7 @@ import {
 } from '../../utils/interfaces'
 
 import { Ingredient } from "../../utils/types"
-import { AppThunk } from '../../utils/types-index';
+import { AppThunk, AppDispatch } from '../../utils/types-index';
 
 export const getIngredientsRequestAction = (): IGetItemsRequest => ({ type: GET_ITEMS_REQUEST });
 export const getIngredientsFailedAction = (): IGetItemsFailed => ({ type: GET_ITEMS_FAILED });
@@ -26,7 +26,7 @@ export const closeCurrentItemACtion = (): ICloseCurrentItem => ({type: CLOSE_CUR
 export const getCurrentItemACtion = (item: Ingredient): IGetCurrentItem => ({type: GET_CURRENT_ITEM, item: item})
 
 export const getIngridients: AppThunk = () => {
-  return async function(dispatch:any) {
+  return async function(dispatch:AppDispatch) {
     dispatch(getIngredientsRequestAction());
     await getItemsRequest().then(res => {
       if (res) {

@@ -1,9 +1,6 @@
-// import { postRefreshTokenRequestAction,
-//     postRefreshTokenFailedAction,
-//     postRefreshTokenSuccessAction } from "../actions/auth";
-  
 import { Middleware } from "redux";
 import { getUser } from "../actions/user";
+import { AppDispatch, RootState } from "../../utils/types-index";
 
 export interface IWsActions {
     readonly wsStart: string;

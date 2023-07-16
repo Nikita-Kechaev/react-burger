@@ -13,9 +13,8 @@ SEND_RESET_PASS_MESS_SUCCES ,
 SEND_RESET_PASS_MESS_FAILED,
 } from '../constant'
 
-import { AppThunk } from '../../utils/types-index';
+import { AppThunk, AppDispatch } from '../../utils/types-index';
 import { setCookie, deleteCookie } from '../../utils/cookie'
-import { Dispatch } from 'redux';
 
 import { 
     getUserRequest,
@@ -69,7 +68,7 @@ export const getLogoutFailedAction = (message: string):  IGetUserLogoutFailed =>
 export const getUserRefreshDataSuccessACtion = (res:TUser): IGetUserRefreshDataSuccess => ({ type: GET_USER_REFRESH_DATA_SUCCESS, data: res})
 export const getUserRefreshDataFailedACtion = (message: string): IGetUserRefreshDataFailed => ({ type: GET_USER_REFRESH_DATA_FAILED, data: {message}})
 
-const userAuth = async (func:any, dispatch:Dispatch) => {
+const userAuth = async (func: Promise<TTokens>, dispatch:AppDispatch) => {
      await func.then((res:TTokens) => {
             let accessToken;
             let refreshToken;
@@ -86,19 +85,19 @@ const userAuth = async (func:any, dispatch:Dispatch) => {
 }
 
 export const regUser: AppThunk = (form:TRegForm) => {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         userAuth(registerUser(form), dispatch)
     }
 }
 
 export const signIn: AppThunk = (form: {email: string, password: string })  => {
-    return  function (dispatch:Dispatch) {
+    return  function (dispatch:AppDispatch) {
         userAuth(loginRequest(form), dispatch)
     }
 };
 
 export const forgPass: AppThunk = (email:string) => {
-    return async function (dispatch:Dispatch) {
+    return async function (dispatch:AppDispatch) {
         await forgotPassword(email).then(() => {
             dispatch(sendForgotPassMessSuccessAction(email))
         }).catch(() =>
@@ -107,7 +106,7 @@ export const forgPass: AppThunk = (email:string) => {
     }
 }
 
-export const getUser: AppThunk = () => (dispatch:Dispatch) => {
+export const getUser: AppThunk = () => (dispatch:AppDispatch) => {
     dispatch(getUserRequestStartAction());
     getUserRequest().then((res) => {
         if (res.success) {
@@ -124,7 +123,7 @@ export const getUser: AppThunk = () => (dispatch:Dispatch) => {
 };
 
 export const resetPassword: AppThunk = (form: {email: string, password: string, token: string}) => {
-    return async function(dispatch:Dispatch) {
+    return async function(dispatch:AppDispatch) {
         await resetUserPassword(form).then(() => {
         dispatch(postResetPassMessSuccessAction())   
         }).catch(() => dispatch(postResetPassMessFailedAction()))
@@ -132,7 +131,7 @@ export const resetPassword: AppThunk = (form: {email: string, password: string, 
 }
 
 export const signOut: AppThunk = () => {
-    return async function(dispatch:Dispatch) {
+    return async function(dispatch:AppDispatch) {
         await logOutRequest().then((res) => {
                 deleteCookie('accessToken')
                 deleteCookie('refreshToken')
@@ -143,7 +142,7 @@ export const signOut: AppThunk = () => {
 }
 
 export const refreshData: AppThunk = (form:{name: string, email: string, password: string}) => {
-    return async function(dispatch:Dispatch) {
+    return async function(dispatch:AppDispatch) {
         await refreshUserData(form).then((res) => {
                 dispatch(getUserRefreshDataSuccessACtion(res))
         }).catch((res) => dispatch(getUserRefreshDataFailedACtion(res)))

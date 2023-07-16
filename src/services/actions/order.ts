@@ -1,5 +1,5 @@
 import {  getOrderRequest } from '../../utils/burger-api'
-import { AppThunk } from '../../utils/types-index';
+import { AppThunk, AppDispatch } from '../../utils/types-index';
 
 import {
 GET_ORDER_REQUEST, 
@@ -19,7 +19,7 @@ export const postOrderSuccessAction = (number: string): IGetOrderSuccess => ({ t
 
 
 export const getOrder: AppThunk = (ids:string[]) => {
-  return function(dispatch:any) {
+  return function(dispatch:AppDispatch) {
     dispatch(postOrderRequestAction());
     getOrderRequest(ids).then(res => {
       if (res && res.success) {

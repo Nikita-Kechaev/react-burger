@@ -1,26 +1,17 @@
-import { getIngridients } from '../services/actions/ingredients';
 import { useDispatch, useSelector } from '../utils/hooks';
 import { AppHeader } from '../components/AppHeader/AppHeader';
 import { useEffect } from 'react';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet} from 'react-router-dom';
 import styles from  './layout.module.css'
 import { FC } from 'react';
 import { getCookie } from '../utils/cookie'
 import { getUser } from '../services/actions/user'
-import { wsConnectionStartAction, wsConnectionClosedAction } from '../services/actions/webSocket';
 
 
 export const LayoutPage: FC = () => {
 
     const dispatch = useDispatch();
     const { isLoading, hasError } = useSelector((store) => store.ingredients)
-
-    useEffect(() => {
-        dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'))
-        return () => {
-            dispatch(wsConnectionClosedAction())
-          }
-    }, [dispatch])
 
     const init = async () => {
         const isToken = getCookie('accessToken')
@@ -29,13 +20,9 @@ export const LayoutPage: FC = () => {
         }
     }
 
-    useEffect(
-        () => {
+    useEffect(() => {
         init()
-        dispatch(getIngridients());
-        },
-        []
-    );
+    },[]);
 
     return (
         <>

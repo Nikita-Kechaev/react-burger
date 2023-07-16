@@ -1,11 +1,10 @@
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import styles from './login.module.css'
 import { useState, useEffect, useCallback } from 'react'
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {  forgPass } from '../services/actions/user';
 import { FC } from 'react';
-import { RootState } from "../utils/types"
 import { SEND_FORGOT_PASS_MESS_FAILED } from '../services/constant'
 
 
@@ -13,8 +12,8 @@ export const ForgotPasswordPage:FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const user = useSelector((store:RootState) => store.user.user)
-    const isSendMail = useSelector((store:RootState) => store.user.sendEmail)
+    const user = useSelector((store) => store.user.user)
+    const isSendMail = useSelector((store) => store.user.sendEmail)
     const [form, setValue] = useState({
         email: '',
     })
@@ -27,7 +26,7 @@ export const ForgotPasswordPage:FC = () => {
                 type: SEND_FORGOT_PASS_MESS_FAILED
             })
           } else {
-          dispatch<any>(forgPass(form));
+          dispatch(forgPass(form));
         }
         },
         [ form, isSendMail]

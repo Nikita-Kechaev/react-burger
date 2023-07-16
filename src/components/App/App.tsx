@@ -15,8 +15,9 @@ import { CLEAR_CONSTRUCTOR } from '../../services/constant';
 import { CLOSE_ORDER_MODAL } from '../../services/constant'
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { Modal } from '../Modal/Modal';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { closeCurrentItemACtion } from '../../services/actions/ingredients'
+import { getIngridients } from '../../services/actions/ingredients';
 
 export const  App: FC = () =>{
 
@@ -37,6 +38,10 @@ export const  App: FC = () =>{
       !location.state && dispatch({type: CLEAR_CONSTRUCTOR});
       navigate(-1)
   }
+
+  useEffect(() => {
+    dispatch(getIngridients());
+  }, [])
  
   return (
     <>

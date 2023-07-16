@@ -5,7 +5,7 @@ import {
     WS_GET_MESSAGE
   } from '../constant';
 import { TWsActions } from '../../utils/interfaces';
-  import { TOrders } from '../../utils/types';
+import { TOrders } from '../../utils/types';
   
   type TWsInitialState = {
     wsConnected: boolean;

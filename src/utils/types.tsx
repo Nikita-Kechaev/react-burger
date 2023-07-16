@@ -47,6 +47,10 @@ export type TModalProps = {
     children?: React.ReactNode;
 }
 
+export type TOrderDetails = {
+    element?: React.ReactNode;
+}
+
 export type TOrder = {
     readonly ingredients: ReadonlyArray<string>;
     readonly _id: string;
@@ -54,6 +58,7 @@ export type TOrder = {
     readonly number: number;
     readonly createdAt: string;
     readonly updatedAt: string;
+    readonly name?: string; 
   }
 
 export type TOrders = {
@@ -68,10 +73,18 @@ export type TOrders = {
     readonly total: number;
     readonly totalToday: number;
     readonly name?: string; 
-    count ?: number
-    price ?: number
-    image_mobile ?: string
-    type ?: string
+    count : number
+    price : number
+    image_mobile : string
+    type : string
+}
+
+export type TOrderCard = {
+    props?: {
+        order: TOrders;
+        key: number
+    }
+    order: TOrders
 }
 
 export type TTokens = {

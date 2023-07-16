@@ -1,18 +1,17 @@
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import styles from './login.module.css'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { FC, useCallback } from 'react';
-import { RootState } from "../utils/types"
 import { resetPassword } from '../services/actions/user';
 
 export const ResetPasswordPage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const isSendMail = useSelector((store:RootState) => store.user.sendEmail)
-    const email = useSelector((store:RootState) => store.user.email)
+    const isSendMail = useSelector((store) => store.user.sendEmail)
+    const email = useSelector((store) => store.user.email)
 
     const [form, setValue] = useState({password:'', token: '', email: email});
     const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -22,7 +21,7 @@ export const ResetPasswordPage: FC = () => {
     const onClick = useCallback(
         (e: React.FormEvent) => {
           e.preventDefault();
-          dispatch<any>(resetPassword(form));
+          dispatch(resetPassword(form));
         },
         [form, isSendMail]
     );

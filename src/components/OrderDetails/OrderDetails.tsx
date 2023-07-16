@@ -1,13 +1,12 @@
 import styles from './OrderDetails.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import {  useSelector } from 'react-redux';
-import { RootState } from "../../utils/types"
+import {  useSelector } from '../../utils/hooks';
 import { FC } from 'react';
 
 
 export const OrderDetails: FC = () => {
 
-    const orderNumber = useSelector((store: RootState) => store.order.orderNumber)
+    const orderNumber = useSelector((store) => store.order.orderNumber)
 
     if (orderNumber) {
         return (

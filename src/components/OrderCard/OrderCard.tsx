@@ -5,9 +5,10 @@ import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-component
 import {  CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 import { Ingredient, TOrders} from '../../utils/types';
+import { TOrderCard } from "../../utils/types"
 
 
-export const OrderCard: FC<any> = (props) => {
+export const OrderCard: FC<TOrderCard> = (props) => {
 
     const location = useLocation()
     const ingridients = useSelector((store) => store.ingredients.items);

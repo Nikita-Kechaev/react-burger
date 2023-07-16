@@ -1,5 +1,5 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../utils/hooks';
 import styles from './login.module.css'
 import { useState, useCallback } from 'react'
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ export const LoginPage: FC = () => {
     const onClick = useCallback(
         (e: React.FormEvent) => {
           e.preventDefault();
-          dispatch<any>(signIn(form));
+          dispatch(signIn(form));
         },
         [form]
     );

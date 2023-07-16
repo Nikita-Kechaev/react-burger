@@ -3,13 +3,13 @@ import styles from './OrderFeedDetail.module.css'
 import { FC, useEffect } from 'react';
 import { useSelector, useDispatch} from '../../utils/hooks';
 import {  CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RootState } from "../../utils/types";
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TOrders } from '../../utils/types';
 import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../../services/actions/webSocketAuth';
+import { wsConnectionStartAction, wsConnectionClosedAction } from '../../services/actions/webSocket';
 import { getCookie } from '../../utils/cookie';
 
-export const OrderFeedDetail: FC<any> = () => {
+export const OrderFeedDetail: FC = () => {
     const {orderId}  = useParams()
     const  location  = useLocation()
     const dispatch = useDispatch()
@@ -22,7 +22,15 @@ export const OrderFeedDetail: FC<any> = () => {
         }
     }, [dispatch, accessToken])
 
-    const ingridients = useSelector((store: RootState) => store.ingredients.items);
+    useEffect(() => {
+        dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'))
+        return () => {
+            dispatch(wsConnectionClosedAction())
+          }
+    }, [dispatch])
+
+
+    const ingridients = useSelector((store) => store.ingredients.items);
     const orders = location.pathname === `/feed/${orderId}` ? useSelector((state) => state.ws.orders) : useSelector((state) => state.wsAuth.orders);
     
     const currentOrder = orders.filter((item:TOrders) => item._id === orderId)[0]
@@ -38,8 +46,8 @@ export const OrderFeedDetail: FC<any> = () => {
 
     const dateFromServer = currentOrder && currentOrder.createdAt
 
-    const totalPrice:number =currentOrder && resultArr ? resultArr.reduce((acc:any, item:any) => acc + (item.type === 'bun'? item.price * 2 : item.price) , 0) : 0
-    const resultArrCount = resultArr.length != 0 ? resultArr.reduce((acc:any, item:any) => {
+    const totalPrice:number = currentOrder && resultArr ? resultArr.reduce((acc, item) => acc + (item.type === 'bun'? item.price * 2 : item.price) , 0) : 0
+    const resultArrCount:Array<TOrders> = resultArr.length != 0 ? resultArr.reduce((acc:Array<TOrders>, item) => {
         if (acc.includes(item)) {
         } else {
             acc.push(item)
