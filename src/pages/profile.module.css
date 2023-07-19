@@ -46,3 +46,28 @@
     color: #F2F2F3;
     transition: 3s;
 }
+
+.main_container {
+    width: 700px;
+    margin-left: 100px;
+}
+
+.orders_container {
+    padding-top: 0;
+    height: 600px;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.orders_container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders_container::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border-radius: 12px;
+}
+
+.orders_container::-webkit-scrollbar-track {
+    background:black;
+}

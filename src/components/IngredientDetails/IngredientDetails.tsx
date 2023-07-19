@@ -1,15 +1,15 @@
 import styles from './IngredientDetails.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import { useParams } from 'react-router-dom';
 import  { FC} from 'react';
 
-import { RootState, Ingredient } from "../../utils/types"
+import { Ingredient } from "../../utils/types"
 
 
 export const IngredientDetails: FC = () => {
     const {ingredientId}  = useParams()
-    const itemModal = useSelector((store:RootState) => store.ingredients.currentItem)
-    const items = useSelector((store:RootState) => store.ingredients.items)
+    const itemModal = useSelector((store) => store.ingredients.currentItem)
+    const items = useSelector((store) => store.ingredients.items)
 
     const itemURL = items ? items.filter((item:Ingredient) => item._id === ingredientId)[0] : ''
 

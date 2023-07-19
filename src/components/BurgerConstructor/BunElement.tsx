@@ -1,7 +1,6 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import { FC } from 'react';
-import { RootState } from "../../utils/types"
 
 
 type IBunElementProps = {
@@ -11,7 +10,7 @@ type IBunElementProps = {
 
 export const BunElement: FC<IBunElementProps> = ({ type, text}) => {
 
-    const bun = useSelector((store: RootState) => store.constructorArr.bun)
+    const bun = useSelector((store) => store.constructorArr.bun)
 
     return (
         bun &&

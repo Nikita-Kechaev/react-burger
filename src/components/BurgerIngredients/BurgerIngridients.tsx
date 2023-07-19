@@ -2,15 +2,15 @@ import  {  useEffect, useState,  FC} from 'react';
 import styles from './BurgerIngridients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Product } from '../Product/Product'
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import { useInView } from 'react-intersection-observer';
-import { RootState } from "../../utils/types"
+
 
 
 export const BurgerIngridients:FC = () => {
     const [current, setCurrent] = useState('bun')
 
-    const ingridients = useSelector((store: RootState) => store.ingredients.items);
+    const ingridients = useSelector((store) => store.ingredients.items);
 
     const [bunRef, inViewBuns] = useInView({
         threshold: 0,

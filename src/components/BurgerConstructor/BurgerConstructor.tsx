@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { useEffect, useCallback, FC } from 'react';
 import { useDrop } from "react-dnd";
 
@@ -9,19 +9,19 @@ import { MainElement } from "./MainElement"
 import { BunElement } from "./BunElement"
 import { Modal } from '../Modal/Modal';
 
-import { createUuidToItem, MOVE_CARD } from '../../services/actions/constructor'
+import { createUuidToItem } from '../../services/actions/constructor'
 import { getOrder } from '../../services/actions/order';
 import styles from './BurgerConstructor.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GET_ORDER_REQUEST } from '../../services/actions/order'
-import { CLEAR_CONSTRUCTOR } from '../../services/actions/constructor';
-import { CLOSE_CURRENT_ITEM } from '../../services/actions/ingredients'
-import { CLOSE_ORDER_MODAL } from '../../services/actions/order'
+import { GET_ORDER_REQUEST } from '../../services/constant'
+import { CLEAR_CONSTRUCTOR, MOVE_CARD } from '../../services/constant';
+import { CLOSE_CURRENT_ITEM } from '../../services/constant'
+import { CLOSE_ORDER_MODAL } from '../../services/constant'
 
 import { getUser } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie'
 
-import { RootState, Ingredient } from "../../utils/types"
+import { Ingredient } from "../../utils/types"
 
 export const BurgerConstructor: FC = () => {
     const navigate = useNavigate()
@@ -39,24 +39,24 @@ export const BurgerConstructor: FC = () => {
         location.state && navigate(-1)
     }
 
-    const ingridients = useSelector((store: RootState) => store.constructorArr.constructorItems)
-    const user = useSelector((store: RootState) => store.user.user)
+    const ingridients = useSelector((store) => store.constructorArr.constructorItems)
+    const user = useSelector((store) => store.user.user)
     const total:number = ingridients ? ingridients.reduce((acc:any, item:Ingredient) => acc + item.price, 0) : 0
-    const bun = useSelector((store: RootState) => store.constructorArr.bun)
+    const bun = useSelector((store) => store.constructorArr.bun)
     const bunPrice:number = bun ? bun.price * 2 : 0
-    const modalIsVisible:boolean = useSelector((store: RootState) => store.order.isVisible)
+    const modalIsVisible:boolean = useSelector((store) => store.order.isVisible)
 
     const [, dropTarget] = useDrop({
         accept: "ingridients",
         drop(item: Ingredient) {
-            dispatch<any>(createUuidToItem(item))
+            dispatch(createUuidToItem(item))
         },
     });
 
     const init = async () => {
         const isToken = getCookie('accessToken')
         if (isToken) {
-            await dispatch<any>(getUser());
+            await dispatch(getUser());
         }
     }
     
@@ -72,7 +72,7 @@ export const BurgerConstructor: FC = () => {
             dispatch({
                 type: GET_ORDER_REQUEST
             })
-            dispatch<any>(getOrder(ids))
+            dispatch(getOrder(ids))
         }
         else {
             navigate('/login')

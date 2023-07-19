@@ -20,7 +20,7 @@ export const AppHeader: FC  = () => {
                             </li>
                             )}
                         </NavLink>
-                        <NavLink to="/order-list" className={isActiveLink}>
+                        <NavLink to="/feed" className={isActiveLink}>
                             {({ isActive }) => (
                             <li className='p-5 ml-2'>
                                 <ListIcon type={isActive ? "primary" : "secondary"} />
