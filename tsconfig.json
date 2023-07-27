@@ -19,9 +19,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{ "name": "typescript-plugin-css-modules"}],
   },
   "include": [
-    "src"
-  ]
+    "src",
+    "cypress/e2e/burger-constructor.cy.js",
+  ],
 }

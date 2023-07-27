@@ -8,12 +8,12 @@ import { TModalProps } from "../../utils/types"
 export const Modal: FC<TModalProps> = (props) => {
 
     return ReactDOM.createPortal(
-        <div className={styles.modalContainer}>
+        <div data-cy="modelContainer" className={styles.modalContainer}>
             <ModalOverlay onClose={props.onClose} />
             <div className={styles.modalWindow}>
                 <div className={styles.mainContainer}>
                     {props.children}
-                    <div className={`${styles.closeButton}`} onClick={props.onClose}>
+                    <div data-cy="closeButton" className={`${styles.closeButton}`} onClick={props.onClose}>
                         <CloseIcon type="primary" />
                     </div>
                 </div>

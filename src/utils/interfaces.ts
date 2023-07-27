@@ -137,7 +137,7 @@ export interface IGetItemsRequest {
 }
 export interface IGetItemsSuccess {
   readonly type: typeof GET_ITEMS_SUCCESS;
-  readonly items: string | Ingredient[]
+  readonly items: Ingredient[]
 
 }
 export interface IGetCurrentItem {

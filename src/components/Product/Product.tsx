@@ -49,7 +49,7 @@ export const Product:FC<IProductPropps> = ({ ingridient }) => {
             >
                 <img className='pr-4 pl-4' src={ingridient.image} />
                 <div className={`${styles.price} mt-1 mb-1`}>
-                    <p className="text text_type_main-small">{ingridient.price}</p>
+                    <p data-cy="productPrice" className="text text_type_main-small">{ingridient.price}</p>
                     <CurrencyIcon type='primary'/>
                 </div>
                 <p className="text text_type_main-small">{ingridient.name}</p>

@@ -8,6 +8,6 @@ interface IProtectRouteProps {
 
 export const ProtectedRouteElement: FC<IProtectRouteProps> = ({ element }: any) => {
     const location = useLocation();
-    const user = useSelector((store) => store.user.user)
-    return (user ? element : <Navigate to='/login' state={{ from: location }} />)
+    const auth = useSelector((store) => store.user.auth)
+    return (auth ? element : <Navigate to='/login' state={{ from: location }} />)
 }

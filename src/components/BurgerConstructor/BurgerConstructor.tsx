@@ -18,9 +18,6 @@ import { CLEAR_CONSTRUCTOR, MOVE_CARD } from '../../services/constant';
 import { CLOSE_CURRENT_ITEM } from '../../services/constant'
 import { CLOSE_ORDER_MODAL } from '../../services/constant'
 
-import { getUser } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie'
-
 import { Ingredient } from "../../utils/types"
 
 export const BurgerConstructor: FC = () => {
@@ -39,9 +36,9 @@ export const BurgerConstructor: FC = () => {
         location.state && navigate(-1)
     }
 
-    const ingridients = useSelector((store) => store.constructorArr.constructorItems)
-    const user = useSelector((store) => store.user.user)
-    const total:number = ingridients ? ingridients.reduce((acc:any, item:Ingredient) => acc + item.price, 0) : 0
+    const ingridients: Array<Ingredient> = useSelector((store) => store.constructorArr.constructorItems)
+    const auth = useSelector((store) => store.user.auth)
+    const total:number = ingridients ? ingridients.reduce((acc, item) => acc + item.price, 0) : 0
     const bun = useSelector((store) => store.constructorArr.bun)
     const bunPrice:number = bun ? bun.price * 2 : 0
     const modalIsVisible:boolean = useSelector((store) => store.order.isVisible)
@@ -53,21 +50,10 @@ export const BurgerConstructor: FC = () => {
         },
     });
 
-    const init = async () => {
-        const isToken = getCookie('accessToken')
-        if (isToken) {
-            await dispatch(getUser());
-        }
-    }
-    
-    useEffect(() => {
-        init()
-    }, [])
-
     const getOrdeNumber = async (ing:Ingredient[], bun:Ingredient) => {
         const ingBun = ing.concat(bun)
         const ids = ingBun.map((item:Ingredient) => item._id)
-        if (user) 
+        if (auth) 
         {
             dispatch({
                 type: GET_ORDER_REQUEST
@@ -87,7 +73,7 @@ export const BurgerConstructor: FC = () => {
         })
     }, [])
 
-    const renderCard = useCallback((card:Ingredient, index:string) => {
+    const renderCard = useCallback((card:Ingredient, index:number) => {
         return (
           card &&  
           <MainElement
@@ -102,19 +88,19 @@ export const BurgerConstructor: FC = () => {
 
     return (
         <div className={`${styles.column} mt-25`}>
-            <div ref={dropTarget} className={styles.dropContainer}>
+            <div data-cy="dropContainer" ref={dropTarget} className={styles.dropContainer}>
 
-                <div className={`${styles.topBotIngridients} pt-4  pr-8 pl-8`}>
+                <div data-cy="bunDropContainer" className={`${styles.topBotIngridients} pt-4  pr-8 pl-8`}>
                     { bun ?
                     <BunElement type="top" text="верх" /> :
                     <p className={`${styles.warning} text text_type_main-large`}>добавьте булку</p>
                     }
                 </div>
 
-                <div className={`${styles.ingridients} ${styles.scroll}`}>
-                    {ingridients && ingridients.map((card:any, i:string) => renderCard(card, i))}
+                <div data-cy="mainDropContainer" className={`${styles.ingridients} ${styles.scroll}`}>
+                    {ingridients && ingridients.map((card, i) => renderCard(card, i))}
                 </div>
-                <div className={`${styles.topBotIngridients} pt-4  pr-8 pl-8`}>
+                <div data-cy="bunDropContainer" className={`${styles.topBotIngridients} pt-4  pr-8 pl-8`}>
                     <BunElement type="bottom" text="низ" />
                 </div>
             </div>

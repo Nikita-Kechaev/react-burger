@@ -17,3 +17,17 @@
     margin-right: 40px;
     margin-left: 40px;
 }
+
+.burgeImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    background-image: url('../../images/burger-done.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}

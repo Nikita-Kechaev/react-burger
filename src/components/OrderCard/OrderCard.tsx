@@ -17,7 +17,7 @@ export const OrderCard: FC<TOrderCard> = (props) => {
     const orderIngredients = props.order.ingredients
     const resultArr:any = [];
     orderIngredients.map((item:string) => {
-        ingridients && ingridients.forEach((element:TOrders) => {
+        ingridients && ingridients.forEach((element:Ingredient) => {
             if (element._id === item) {
                 resultArr.push(element)
             }

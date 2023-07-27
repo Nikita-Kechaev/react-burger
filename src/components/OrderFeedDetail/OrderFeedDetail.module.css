@@ -1,5 +1,5 @@
 .mainContainer {
-    height: 589px;
+    max-height: 589px;
     width: 600px;
     padding-left: 40px;
 }
@@ -15,8 +15,27 @@
     margin-top: 40px;
 }
 
+.cardTop {
+    margin-top: 20px;
+    max-height: 110px;
+    overflow-y: scroll;
+}
+
+.cardTop::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cardTop::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border-radius: 12px;
+}
+
+.cardTop::-webkit-scrollbar-track {
+    background:#131316;
+}
+
 .cardIngContainer {
-    height: 300px;
+    max-height: 300px;
     margin-top: 20px;
     overflow-y: scroll;
 }
@@ -31,7 +50,7 @@
 }
 
 .cardIngContainer::-webkit-scrollbar-track {
-    background:black;
+    background:#131316;
 }
 
 .item {
@@ -57,7 +76,7 @@
 }
 
 .cardButtom {
-    margin-top: 50px;
+    margin-top: 20px;
     height: 50px;
     display: flex;
     align-items: center;

@@ -3,11 +3,11 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
-  } from '../constant';
+} from '../constant';
 import { TWsActions } from '../../utils/interfaces';
 import { TOrders } from '../../utils/types';
   
-  type TWsInitialState = {
+export type TWsInitialState = {
     wsConnected: boolean;
     orders: ReadonlyArray<TOrders>
     total: number;
@@ -15,13 +15,13 @@ import { TOrders } from '../../utils/types';
     error: string | undefined,
   };
   
-  const initialState: TWsInitialState = {
+export const initialState: TWsInitialState = {
     wsConnected: false,
     orders: [],
     total: 0,
     totalToday: 0,
     error: undefined,
-  };
+};
 
   export const wsReducer = (state = initialState, action: TWsActions): TWsInitialState => {
     switch (action.type) {
