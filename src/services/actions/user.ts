@@ -14,7 +14,7 @@ SEND_RESET_PASS_MESS_FAILED,
 } from '../constant'
 
 import { AppThunk, AppDispatch } from '../../utils/types-index';
-import { setCookie, deleteCookie } from '../../utils/cookie'
+import { setCookie, deleteCookie, getCookie } from '../../utils/cookie'
 
 import { 
     getUserRequest,
@@ -133,11 +133,13 @@ export const resetPassword: AppThunk = (form: {email: string, password: string, 
 export const signOut: AppThunk = () => {
     return async function(dispatch:AppDispatch) {
         await logOutRequest().then((res) => {
+                dispatch(getLogoutAction(res))
                 deleteCookie('accessToken')
                 deleteCookie('refreshToken')
-                dispatch(getLogoutAction(res))
      
-        }).catch((res) => dispatch(getLogoutFailedAction(res)))
+        }).catch((res) => {
+            dispatch(getLogoutFailedAction(res))
+        })
     }
 }
 

@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/react-burger",
+  "homepage": "/react-burger/",
   "dependencies": {
     "@ya.praktikum/react-developer-burger-ui-components": "1.14.0",
     "classnames": "^2.3.2",

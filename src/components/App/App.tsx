@@ -19,7 +19,6 @@ import { FC, useEffect } from 'react';
 import { closeCurrentItemACtion } from '../../services/actions/ingredients'
 import { getIngridients } from '../../services/actions/ingredients';
 import { NotFound404 } from '../../pages/NotFound404';
-import { getUser } from '../../services/actions/user';
 
 
 export const  App: FC = () =>{
@@ -42,7 +41,6 @@ export const  App: FC = () =>{
   }
 
   useEffect(() => {
-    dispatch(getUser())
     dispatch(getIngridients());
   }, [])
  
@@ -78,7 +76,7 @@ export const  App: FC = () =>{
 }
 
 return (
-  <Router>
+  <Router basename="/react-burger">
     <ModalSwitch />
   </Router>)
 }

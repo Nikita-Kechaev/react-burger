@@ -1,5 +1,5 @@
 .mainContainer {
-    max-height: 589px;
+    min-height: 589px;
     width: 600px;
     padding-left: 40px;
 }
@@ -17,8 +17,6 @@
 
 .cardTop {
     margin-top: 20px;
-    max-height: 110px;
-    overflow-y: scroll;
 }
 
 .cardTop::-webkit-scrollbar {
@@ -35,7 +33,8 @@
 }
 
 .cardIngContainer {
-    max-height: 300px;
+    min-height: 300px;
+    max-height: 50vh;
     margin-top: 20px;
     overflow-y: scroll;
 }

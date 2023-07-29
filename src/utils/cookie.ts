@@ -29,5 +29,5 @@ export function getCookie(name:string):any {
   }
   
   export function deleteCookie(name:string) {
-    setCookie(name, null, { expires: -1 });
+    setCookie(name, "", {'max-age': -1,'path': '/'})
   }

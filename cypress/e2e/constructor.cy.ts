@@ -1,7 +1,7 @@
 describe('Страница конструктора работает корректно', () => {
   beforeEach('passes', () => {
     cy.viewport(1300, 800)
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/react-burger/')
   })
 
   it('проверяем содержание страницы конструктора', () => {
@@ -9,11 +9,20 @@ describe('Страница конструктора работает корре�
     cy.contains('добавьте булку')
   })
 
-  it('проверяем перетаскивание ингредиентов и оформление заказа', () => {
-    cy.get('[data-cy="ingredientsContainer"]').eq(0).as('bun')
-    cy.get('[data-cy="ingredientsContainer"]').eq(1).as('souce')
+  it('проверяем открытие модального окна ингредиента', () => {
+    cy.get('[data-cy="ingredientsContainer"]').children().eq(0).click()
+    cy.get('[data-cy="modelContainer"]').should('contain', 'Детали ингредиента')
+    cy.get('[data-cy="modelContainer"]').should('contain', 'Краторная булка N-200i')
+    cy.get('[data-cy="closeButton"]').click()
+    cy.get('[data-cy="modelContainer"]').should('not.exist')
+  })
 
-    cy.get('[data-cy="dropContainer"]').first().as('dropContainer')
+  it('проверяем перетаскивание ингредиентов и удаление игредиентов из заказа', () => {
+    cy.get('[data-cy="ingredientsContainer"]').children().eq(1).as('bun')
+    cy.get('[data-cy="ingredientsContainer"]').children().eq(2).as('souce')
+    cy.get('[data-cy="ingredientsContainer"]').children().eq(3).as('souce1')
+
+    cy.get('[data-cy="dropContainer"]').as('dropContainer')
 
     cy.get('@bun').trigger('dragstart')
     cy.get('@dropContainer').trigger('dragenter').trigger('drop')
@@ -24,8 +33,27 @@ describe('Страница конструктора работает корре�
     cy.get('@souce').trigger('dragstart')
     cy.get('@dropContainer').trigger('dragenter').trigger('drop')
 
+    cy.get('@souce1').trigger('dragstart')
+    cy.get('@dropContainer').trigger('dragenter').trigger('drop')
+
     cy.get('[data-cy="mainDropContainer"]').as('mainDropContainer')
-    cy.get('@mainDropContainer').should('contain', 'Соус с шипами Антарианского плоскоходца');
+    cy.get('@mainDropContainer').should('contain', 'Соус Spicy-X');
+
+    cy.get('@mainDropContainer').children().eq(0).find('svg').click({ multiple: true} )
+    cy.get('@mainDropContainer').children().eq(0).find('svg').click({ multiple: true} )
+
+    cy.get('@mainDropContainer').should('not.contain', 'Соус Spicy-X');
+  })
+
+  it('проверяем оформление заказа и закрытие модального окна заказа', () => {
+    cy.get('[data-cy="ingredientsContainer"]').children().eq(1).as('bun')
+    cy.get('[data-cy="ingredientsContainer"]').children().eq(2).as('souce')
+    cy.get('[data-cy="dropContainer"]').as('dropContainer')
+    cy.get('@bun').trigger('dragstart')
+    cy.get('@dropContainer').trigger('dragenter').trigger('drop')
+    cy.get('[data-cy="bunDropContainer"]').as('bunDropContainer')
+    cy.get('@souce').trigger('dragstart')
+    cy.get('@dropContainer').trigger('dragenter').trigger('drop')
 
     cy.get('button').contains('Оформить заказ').click();
     cy.get('input[type=email]').type(Cypress.env('email'));
