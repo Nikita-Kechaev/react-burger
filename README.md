@@ -29,6 +29,8 @@
 ### Используемые технологии
 <div>
     <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" width="50" />
+    <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" width="50" />
+    <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" width="50" />
 </div>
 
 * **react**: 18.2.0,
@@ -47,5 +49,5 @@
 * _Для запусков тестов на Cypress необходимо в корне проекта создать файл cypress.env.json c сожержанием: { "email" : "ваш email в приложении", "password": "ваш пароль от приложения"}_
 ---
 ### Ссылка на демо-версию проекта:
-* [React-Burger-DEMO](https://nikita-kechaev.github.io/react-burger/)\
+* [react-burger-demo](https://nikita-kechaev.github.io/react-burger/)
 ---
