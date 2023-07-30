@@ -4,25 +4,10 @@ import { useEffect } from 'react';
 import { Outlet} from 'react-router-dom';
 import styles from  './layout.module.css'
 import { FC } from 'react';
-import { getCookie } from '../utils/cookie'
-import { getUser } from '../services/actions/user'
 
 
 export const LayoutPage: FC = () => {
-
-    const dispatch = useDispatch();
     const { isLoading, hasError } = useSelector((store) => store.ingredients)
-
-    const init = async () => {
-        const isToken = getCookie('accessToken')
-        if (isToken) {
-          await dispatch(getUser());
-        }
-    }
-
-    useEffect(() => {
-        init()
-    },[]);
 
     return (
         <>

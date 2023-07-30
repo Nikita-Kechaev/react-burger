@@ -6,7 +6,7 @@ import {
 } from '../constant'
 import { TOrderActions } from "../../utils/interfaces"
 
-type TOrdersInitialState = {
+export type TOrdersInitialState = {
     readonly isVisible: boolean,
     readonly orderNumber: string,
     readonly orderRequest: boolean,

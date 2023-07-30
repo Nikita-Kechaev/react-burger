@@ -62,7 +62,7 @@ export const BurgerIngridients:FC = () => {
                 {ingridients && ingTypes.map((type, index) => (
                     <div key={index}>
                         <p id={type.type} className="text text_type_main-medium">{type.title}</p>
-                        <div ref={type.ref} className={`${styles.cardsContainer} pl-4 pr-4 pt-6 pb-10`}>
+                        <div data-cy="ingredientsContainer" ref={type.ref} className={`${styles.cardsContainer} pl-4 pr-4 pt-6 pb-10` }>
                             {ingridients.map(
                                 (ingridient:any) => (
                                     ingridient.type === `${type.type}` &&

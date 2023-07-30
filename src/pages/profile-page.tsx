@@ -1,6 +1,6 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { Outlet, NavLink, useLocation, Link} from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import styles from './profile.module.css'
 import { useDispatch, useSelector} from '../utils/hooks';
 import { signOut, refreshData } from '../services/actions/user'
@@ -8,7 +8,6 @@ import { getCookie } from '../utils/cookie'
 import { FC } from 'react';
 import { OrderCard } from '../components/OrderCard/OrderCard';
 import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../services/actions/webSocketAuth';
-import { TOrders } from '../utils/types';
 import { TOrderDetails } from '../utils/types';
 
 export const ProfileInput: FC = () => {
@@ -138,7 +137,7 @@ export const ProfileOrders: FC<TOrderDetails> = ({ element }) => {
 
 
     const ordersContent =  (
-        orders && orders.map((order:TOrders, index:number) => {
+        orders && orders.map((order, index) => {
             return (
                 <OrderCard order={order} key={index} />
             )

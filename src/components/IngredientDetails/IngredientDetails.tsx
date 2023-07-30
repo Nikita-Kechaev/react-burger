@@ -11,11 +11,12 @@ export const IngredientDetails: FC = () => {
     const itemModal = useSelector((store) => store.ingredients.currentItem)
     const items = useSelector((store) => store.ingredients.items)
 
-    const itemURL = items ? items.filter((item:Ingredient) => item._id === ingredientId)[0] : ''
+    const itemURL = items ? items.filter((item) => item._id === ingredientId)[0] : null
 
-    const currentItem = ingredientId ? itemURL : itemModal
+    const currentItem: Ingredient | null = ingredientId ? itemURL : itemModal
 
     return (
+        currentItem &&
         <div className={styles.maintContainer }>
             <div className={`${styles.titleContainer} pt-10 pl-10`}>
                 <p className="text text_type_main-large">Детали ингредиента</p>

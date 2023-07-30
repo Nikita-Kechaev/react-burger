@@ -7,7 +7,7 @@ import {
   import { TWsAuthActions } from '../../utils/interfaces';
   import { TOrders } from '../../utils/types';
   
-  type TWsAuthInitialState = {
+export  type TWsAuthInitialState = {
     wsConnected: boolean;
     orders: ReadonlyArray<TOrders>
     total: number;
@@ -15,7 +15,7 @@ import {
     error: string | undefined,
   };
     
-  const initialState: TWsAuthInitialState = {
+export  const initialState: TWsAuthInitialState = {
     wsConnected: false,
     orders: [],
     total: 0,

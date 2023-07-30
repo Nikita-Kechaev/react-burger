@@ -14,16 +14,24 @@ import {GET_USER_REQUEST_START,
 
 import { TUserActions } from "../../utils/interfaces"
 
-type TUserInitialState = {
-    readonly user: any;
+export type TUserInitialState = {
+    readonly user: {
+        email: string;
+        name: string;
+    };
+    auth: boolean,
     readonly errorMessage: string,
     readonly sendEmail: boolean,
     readonly email: string,
     readonly isLoading: boolean,
 }
 
-const initialState = {
-    user: '',
+const initialState: TUserInitialState = {
+    user: {
+        email: '',
+        name: ''
+    },
+    auth: false,
     errorMessage: '',
     sendEmail: false,
     email: '',
@@ -48,39 +56,54 @@ export const userReducer = (state = initialState, action:TUserActions): TUserIni
             return {
                 ...state,
                 user: action.data.user,
+                auth: true
             }
         }
         case GET_USER_LOGIN_SUCCESS: {
             return {
               ...state,
               user: action.data.user,
-              errorMessage: ''
+              errorMessage: '',
+              auth: true
             };
         }
         case GET_LOGOUT: {
             return {
                 ...state,
-                user: '',
-                errorMessage: action.data.message
+                user: {
+                    email: '',
+                    name: ''
+                },
+                errorMessage: action.data.message,
+                auth: false
             }
         }
         case GET_LOGOUT_FAILED: {
             return {
                 ...state,
-                user: '',
+                user: {
+                    email: '',
+                    name: ''
+                },
                 errorMessage: action.data.message
             }
         }
         case GET_USER_REFRESH_DATA_SUCCESS: {
             return {
                 ...state,
-                user: action.data.user
+                user: action.data.user,
+                auth: true
             }
         }
         case GET_USER_REFRESH_DATA_FAILED: {
             return {
                 ...state,
-                errorMessage: action.data.message
+                errorMessage: action.data.message,
+                auth: false,
+                user: {
+                    email: '',
+                    name: ''
+                },
             }
         }
         case SEND_FORGOT_PASS_MESS_SUCCES: {

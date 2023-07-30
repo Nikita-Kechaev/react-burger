@@ -6,19 +6,20 @@ import {
   CLOSE_CURRENT_ITEM
 } from '../constant'
 import { TBurgerIngredientActions } from "../../utils/interfaces"
+import { Ingredient } from '../../utils/types'
 
-type TBurgerIngredientsInitialState = {
-  readonly currentItem: any,
+export type TBurgerIngredientsInitialState = {
+  readonly currentItem: null| Ingredient,
   readonly modalIsVisible: boolean,
-  readonly items: any,
+  readonly items: [] | Array<Ingredient> ,
   readonly isLoading: boolean,
   readonly hasError: boolean,
 }
 
-const initialState = {
-  currentItem: '',
+const initialState: TBurgerIngredientsInitialState = {
+  currentItem: null,
   modalIsVisible: false,
-  items: '',
+  items: [],
   isLoading: false,
   hasError: false,
 }
@@ -57,7 +58,7 @@ export const ingReducer = (state = initialState, action:TBurgerIngredientActions
       return {
         ...state,
         modalIsVisible: false,
-        currentItem: ''
+        currentItem: null
       }
     }
     default: {

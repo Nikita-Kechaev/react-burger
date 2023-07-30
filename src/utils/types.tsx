@@ -7,7 +7,8 @@ export enum IngredientType {
 export type Ingredient = {
     _id: string;
     name: string;
-    type: IngredientType;
+    // type: IngredientType;
+    type: 'bun' | 'sauce' | 'main';
     proteins: number;
     fat: number;
     carbohydrates: number;
@@ -18,17 +19,8 @@ export type Ingredient = {
     image_large: string;
     __v: number;
     uuid?: string;
+    count: number;
 };
-
-
-export type RootState = {
-    user?: any; 
-    constructorArr?: any;
-    order?: any;
-    ingredients?: any;
-    bun?: any;
-    wsAuth?: any;
-}
 
 export type TMoveCard = {
     dragIndex:string, 
@@ -38,7 +30,7 @@ export type TMoveCard = {
 export type TMainElementProps = {
     id: string;
     item:Ingredient;
-    index:string;
+    index:number;
     moveCard:any;
 }
 
@@ -73,10 +65,10 @@ export type TOrders = {
     readonly total: number;
     readonly totalToday: number;
     readonly name?: string; 
-    count : number
-    price : number
-    image_mobile : string
-    type : string
+    count : number;
+    price : number;
+    image_mobile : string;
+    type : string;
 }
 
 export type TOrderCard = {
@@ -101,4 +93,9 @@ export type TRegForm = {
     email: string, 
     password: string, 
     name: string
+}
+
+export type TUser = {
+    email: string;
+    name: string;
 }

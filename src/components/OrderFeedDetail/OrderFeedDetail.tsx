@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import { useSelector, useDispatch} from '../../utils/hooks';
 import {  CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TOrders } from '../../utils/types';
+import { Ingredient, TOrders } from '../../utils/types';
 import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../../services/actions/webSocketAuth';
 import { wsConnectionStartAction, wsConnectionClosedAction } from '../../services/actions/webSocket';
 import { getCookie } from '../../utils/cookie';
@@ -33,10 +33,10 @@ export const OrderFeedDetail: FC = () => {
     const ingridients = useSelector((store) => store.ingredients.items);
     const orders = location.pathname === `/feed/${orderId}` ? useSelector((state) => state.ws.orders) : useSelector((state) => state.wsAuth.orders);
     
-    const currentOrder = orders.filter((item:TOrders) => item._id === orderId)[0]
-    const resultArr:Array<TOrders> = [];
+    const currentOrder = orders.filter((item) => item._id === orderId)[0]
+    const resultArr:Array<Ingredient>  = [];
     currentOrder && currentOrder.ingredients.map((item) => {
-        ingridients && ingridients.forEach((element:TOrders) => {
+        ingridients && ingridients.forEach((element) => {
             if (element._id === item) {
                 element.count = 0
                 resultArr.push(element)
@@ -47,7 +47,7 @@ export const OrderFeedDetail: FC = () => {
     const dateFromServer = currentOrder && currentOrder.createdAt
 
     const totalPrice:number = currentOrder && resultArr ? resultArr.reduce((acc, item) => acc + (item.type === 'bun'? item.price * 2 : item.price) , 0) : 0
-    const resultArrCount:Array<TOrders> = resultArr.length != 0 ? resultArr.reduce((acc:Array<TOrders>, item) => {
+    const resultArrCount: Array<Ingredient> = resultArr.length != 0 ? resultArr.reduce((acc:Array<Ingredient>, item) => {
         if (acc.includes(item)) {
         } else {
             acc.push(item)
@@ -62,7 +62,7 @@ export const OrderFeedDetail: FC = () => {
 
     
     const ingContent = (
-        resultArrCount.map((item:TOrders, index:number) => {
+        resultArrCount.map((item, index) => {
             return (
                 <div key={index} className={styles.item}>
                     <div className={styles.imgAndName}>

@@ -1,0 +1,8 @@
+.main_container {
+    width: 100vw;
+    height: 90vh;
+    background-image: url('../images/404.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

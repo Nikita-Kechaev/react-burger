@@ -8,13 +8,13 @@ import update from 'immutability-helper'
 import { Ingredient } from "../../utils/types"
 import { TBurgerConstructorActions } from "../../utils/interfaces"
 
-type TBurgerConstructorInitialState = {
-    readonly bun: any;
-    readonly constructorItems: any;
+export type TBurgerConstructorInitialState = {
+    readonly bun: null | Ingredient;
+    readonly constructorItems: [] | Array<Ingredient>;
 }
 
-const initialState = {
-    bun: '',
+const initialState: TBurgerConstructorInitialState = {
+    bun: null,
     constructorItems: [],
 }
 
@@ -62,7 +62,7 @@ export const constructorReducer = (state = initialState, action:TBurgerConstruct
         case CLEAR_CONSTRUCTOR : {
             return {
                 ...state,
-                bun: '',
+                bun: null,
                 constructorItems: [], 
             }
         }

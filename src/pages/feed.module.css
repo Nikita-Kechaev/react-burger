@@ -46,7 +46,7 @@
 }
 
 .done_column::-webkit-scrollbar-track {
-    background:black;
+    background:#131316;
 }
 
 .orders_container::-webkit-scrollbar {
@@ -59,7 +59,7 @@
 }
 
 .orders_container::-webkit-scrollbar-track {
-    background:black;
+    background:#131316;
 }
 
 .order_done_number {

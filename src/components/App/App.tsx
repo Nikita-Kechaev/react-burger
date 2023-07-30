@@ -18,15 +18,16 @@ import { Modal } from '../Modal/Modal';
 import { FC, useEffect } from 'react';
 import { closeCurrentItemACtion } from '../../services/actions/ingredients'
 import { getIngridients } from '../../services/actions/ingredients';
+import { NotFound404 } from '../../pages/NotFound404';
+
 
 export const  App: FC = () =>{
-
   const ModalSwitch = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const location = useLocation()
 
-    const user = useSelector((store) => store.user.user)
+    const auth = useSelector((store) => store.user.auth)
     const from = location?.state?.from || '/';
     const background = location.state && location.state.background;
 
@@ -49,17 +50,18 @@ export const  App: FC = () =>{
         <Route path='/' element={<LayoutPage />}>
           <Route index element={<MainPage />} />
           <Route path='ingredients/:ingredientId' element={<IngredientDetails />} />
-          <Route path="login" element={!user ? <LoginPage /> : <Navigate to={from} />} />
+          <Route path="login" element={!auth ? <LoginPage /> : <Navigate to={from} />} />
           <Route path="profile/orders/:orderId" element={<ProtectedRouteElement element={<OrderFeedDetail />}/>} />
           <Route path="profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} >
             <Route index  element={<ProfileInput />} />
             <Route path="orders"  element={<ProfileOrders />}/>
           </Route>
-          <Route path="register/" element={!user ? <RegisterPage /> : <Navigate to={from} />} />
-          <Route path="forgot-password" element={!user ? <ForgotPasswordPage /> : <Navigate to={from} />}/>
-          <Route path="reset-password"  element={!user ? <ResetPasswordPage /> : <Navigate to={from} />} />
+          <Route path="register/" element={!auth ? <RegisterPage /> : <Navigate to={from} />} />
+          <Route path="forgot-password" element={!auth ? <ForgotPasswordPage /> : <Navigate to={from} />}/>
+          <Route path="reset-password"  element={!auth ? <ResetPasswordPage /> : <Navigate to={from} />} />
           <Route path="feed" element={<OrderList />} />
           <Route path="feed/:orderId" element={<OrderFeedDetail />} />
+          <Route path="*" element={<NotFound404/>}/>
           {background && (
             <>
               <Route index  path='ingredients/:ingredientId' element={<MainPage element={<Modal onClose={()=>onClose()}><IngredientDetails /></Modal>} />} />
@@ -74,7 +76,7 @@ export const  App: FC = () =>{
 }
 
 return (
-  <Router>
+  <Router basename="/react-burger">
     <ModalSwitch />
   </Router>)
 }

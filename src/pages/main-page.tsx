@@ -5,7 +5,6 @@ import { DndProvider } from "react-dnd";
 import { FC} from 'react';
 import { TOrderDetails } from '../utils/types';
 
-// тип?
 export const MainPage:FC<TOrderDetails> = ({ element }) => {
 
     return (
